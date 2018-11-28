@@ -15,8 +15,6 @@ script, milestone_csv, contract_csv = argv
 #creates workbook with name (using xlsx writer module)
 workbook = xlsxwriter.Workbook('Project Fintrack Summary.xlsx')
 
-#create a comment #delete a comment
-
 #creates worksheet with name 'Summary Sheet'
 worksheet = workbook.add_worksheet('Summary sheet')
 
