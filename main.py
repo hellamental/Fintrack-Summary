@@ -7,10 +7,16 @@ from dateutil.parser import *
 from datetime_convert import *
 from working_with_date import *
 import xlsxwriter
+import os
+
+print os.getcwd()
 
 #imports csv_filename as argument for csv load functino later on in the code. 
 script, milestone_csv, contract_csv = argv
 
+path = "C:\Users\mceda\Desktop"
+os.chdir(path)
+print os.getcwd()
 
 #creates workbook with name (using xlsx writer module)
 workbook = xlsxwriter.Workbook('Project Fintrack Summary.xlsx')
