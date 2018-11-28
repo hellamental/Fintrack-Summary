@@ -18,8 +18,12 @@ path = "C:\Users\mceda\Desktop"
 os.chdir(path)
 print os.getcwd()
 
+today = datetime.today().strftime("%Y-%m-%d_%H-%M-%S")
+
+workbook_filename = "Project_Fintrack_Summary_" + str(today) + ".xlsx"
+print workbook_filename
 #creates workbook with name (using xlsx writer module)
-workbook = xlsxwriter.Workbook('Project Fintrack Summary.xlsx')
+workbook = xlsxwriter.Workbook(workbook_filename)
 
 #creates worksheet with name 'Summary Sheet'
 worksheet = workbook.add_worksheet('Summary sheet')
