@@ -6,7 +6,7 @@ def str_to_datetime(milestone_matrix):
 
     dates_list = []
     for i in milestone_matrix:
-        dates_list.append(i[20])
+        dates_list.append(i['DUE_DATE__C'])
 
     del dates_list[0]
 #   print (final_date_list)

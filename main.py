@@ -34,7 +34,7 @@ contract_matrix = import_opportunities(contract_csv)
 
 print len(milestone_matrix), '//Number of Milestones'
 #creates a unique list from 29th element of milestone matrix
-ContractIdList = unique_list(milestone_matrix,17)
+ContractIdList = unique_list(milestone_matrix,'CONTRACT__C')
 
 OppIdList = []
 for i in contract_matrix:

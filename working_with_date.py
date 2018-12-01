@@ -145,17 +145,18 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 	for i in milestone_matrix:
 		
 		if i[40] == Milestone_Type:
-			due_Date = i[20]
+			due_Date = i['DUE_DATE__C']
 			if IdName == 'ContractIdList':
-				oppID = i[17]
+				oppID = i['CONTRACT__C']
 			elif IdName == 'OppIdList':
-				oppID = i[29]
+				oppID = i['OPPORTUNITY__C']
 			else: #oppIdList
 				pass 	
 			milestone_name = i[3]
 			percentage = i[32]
 			prjct_name = i[35]
 			invoice_C = i[24]
+			status = i[44]
 			
 			if due_Date == '':
 				pass
@@ -176,8 +177,8 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 						dollar_val = float(i[27])
 						if excel_matrix[dep][row][col] == 0:
 							excel_matrix[dep][row][col] = '='+str(dollar_val)
-							excel_matrix[2][row][col] = i[44]
-							excel_matrix[1][row][col] = str(i[3])+' - '+str(i[35])+' - '+str(i[44])+' - $'+str(dollar_val)+' - '+str(i[32])+'% - '+due_Date #add due date
+							excel_matrix[2][row][col] = status
+							excel_matrix[1][row][col] = str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date #add due date
 							
 						else:
 							excel_matrix[dep][row][col] = excel_matrix[dep][row][col]+'+'+str(dollar_val)
