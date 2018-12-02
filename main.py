@@ -8,9 +8,7 @@ from datetime_convert import *
 from working_with_date import *
 import xlsxwriter
 import os
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+
 print os.getcwd()
 
 #imports csv_filename as argument for csv load functino later on in the code. 
@@ -22,8 +20,7 @@ print os.getcwd()
 
 today = datetime.today().strftime("%Y-%m-%d_%H-%M-%S")
 
-workbook_filename = "Project_Fintrack_Summary.xlsx"
-
+workbook_filename = "Project_Fintrack_Summary_" + str(today) + ".xlsx"
 print workbook_filename
 #creates workbook with name (using xlsx writer module)
 workbook = xlsxwriter.Workbook(workbook_filename)
