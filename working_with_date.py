@@ -144,7 +144,7 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 	#print IdName
 	for i in milestone_matrix:
 		
-		if i[40] == Milestone_Type:
+		if i['RECORD_TYPE_NAME__C'] == Milestone_Type:
 			due_Date = i['DUE_DATE__C']
 			if IdName == 'ContractIdList':
 				oppID = i['CONTRACT__C']
@@ -152,11 +152,13 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 				oppID = i['OPPORTUNITY__C']
 			else: #oppIdList
 				pass 	
-			milestone_name = i[3]
-			percentage = i[32]
-			prjct_name = i[35]
-			invoice_C = i[24]
-			status = i[44]
+			
+			invoice_C = i['INVOICE__C'] #i[24]
+			due_Date = i['DUE_DATE__C'] #i[20]	
+			milestone_name = i['NAME'] #i[3]
+			percentage = i['PERCENTAGE__C'] #i[32]
+			prjct_name = i['PROJECT_NAME_CONTRACT__C'] #i[35]
+			status = i['STATUS__C'] #i[44]
 			
 			if due_Date == '':
 				pass
@@ -174,7 +176,7 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 						row = Idlist.index(oppID)+1  #this line is causing an error for Opp IDs
 						#print row
 						dep = 0
-						dollar_val = float(i[27])
+						dollar_val = float(i['MILESTONE_VALUE__C'])
 						if excel_matrix[dep][row][col] == 0:
 							excel_matrix[dep][row][col] = '='+str(dollar_val)
 							excel_matrix[2][row][col] = status
@@ -182,8 +184,8 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 							
 						else:
 							excel_matrix[dep][row][col] = excel_matrix[dep][row][col]+'+'+str(dollar_val)
-							excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(i[3])+' - '+str(i[35])+' - '+str(i[44])+' - $'+str(dollar_val)+' - '+str(i[32])+'% - '+due_Date#add due date
-							excel_matrix[2][row][col] = i[44]
+							excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date#add due date
+							excel_matrix[2][row][col] = status
 					else:
 						pass
 			pass
@@ -193,12 +195,13 @@ def excel_matrix_populator_site(milestone_matrix,excel_matrix,Id,Idlist,Mileston
 	#print Id
 	for i in milestone_matrix:
 		
-		if i[40] == Milestone_Type and i[17] == Id:
-			due_Date = i[20]
-			oppID = i[29]	
-			milestone_name = i[3]
-			percentage = i[32]
-			prjct_name = i[35]
+		if i['RECORD_TYPE_NAME__C'] == Milestone_Type and i['CONTRACT__C'] == Id:
+			due_Date = i['DUE_DATE__C'] #i[20]
+			oppID = i['OPPORTUNITY__C'] #i[29]	
+			milestone_name = i['NAME'] #i[3]
+			percentage = i['PERCENTAGE__C'] #i[32]
+			prjct_name = i['PROJECT_NAME_CONTRACT__C'] #i[35]
+			status = i['STATUS__C'] #i[44]
 			if due_Date == '':
 				pass
 			else:
@@ -215,10 +218,10 @@ def excel_matrix_populator_site(milestone_matrix,excel_matrix,Id,Idlist,Mileston
 						row = Idlist.index(oppID)+1
 						#print row
 						dep = 0
-						dollar_val = float(i[27])
+						dollar_val = float(i['MILESTONE_VALUE__C'])
 						if excel_matrix[dep][row][col] == 0:
 							excel_matrix[dep][row][col] = '='+str(dollar_val)
-							excel_matrix[1][row][col] = i[44]
+							excel_matrix[1][row][col] = status
 						else:
 							excel_matrix[dep][row][col] = excel_matrix[dep][row][col]+'+'+str(dollar_val)
 					else:
@@ -231,20 +234,21 @@ def excel_matrix_populator_site2(milestone_matrix,excel_matrix,IdName,Idlist,Mil
 	#print IdName
 	for i in milestone_matrix:
 		
-		if i[40] == Milestone_Type:
-			due_Date = i[20]
-			if IdName == 'ContractIdList' and i[17]!='':
-				oppID = i[17]
+		if i['RECORD_TYPE_NAME__C'] == Milestone_Type:
+			due_Date = i['DUE_DATE__C'] #i[20]
+			if IdName == 'ContractIdList' and i['CONTRACT__C']!='':
+				oppID = i['CONTRACT__C']
 			elif IdName == 'OppIdList':
-				oppID = i[29]
+				oppID = i['OPPORTUNITY__C']
 			else: #oppIdList
 				pass 	
-			milestone_name = i[3]
-			percentage = i[32]
-			prjct_name = i[35]
-			invoice_C = i[24]
-			CntrctId = i[17]
-			
+			milestone_name = i['NAME'] #i[3]
+			percentage = i['PERCENTAGE__C'] #i[32]
+			prjct_name = i['PROJECT_NAME_CONTRACT__C'] #i[35]
+			invoice_C = i['INVOICE__C']  #i[24]
+			CntrctId = i['CONTRACT__C'] #i[17]
+			status = i['STATUS__C'] #i[44]
+
 			if due_Date != '' and ContractId == CntrctId:
 				k = parse(due_Date)
 				#print excel_matrix[0]
@@ -259,16 +263,16 @@ def excel_matrix_populator_site2(milestone_matrix,excel_matrix,IdName,Idlist,Mil
 						row = Idlist.index(oppID)+1  #this line is causing an error for Opp IDs
 						#print row
 						dep = 0
-						dollar_val = float(i[27])
+						dollar_val = float(i['MILESTONE_VALUE__C'])
 						if excel_matrix[dep][row][col] == 0:
 							excel_matrix[dep][row][col] = '='+str(dollar_val)
-							excel_matrix[2][row][col] = i[44]
-							excel_matrix[1][row][col] = str(i[3])+' - '+str(i[35])+' - '+str(i[44])+' - $'+str(dollar_val)+' - '+str(i[32])+'% - '+due_Date #add due date
+							excel_matrix[2][row][col] = status
+							excel_matrix[1][row][col] = str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date #add due date
 							
 						else:
 							excel_matrix[dep][row][col] = excel_matrix[dep][row][col]+'+'+str(dollar_val)
-							excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(i[3])+' - '+str(i[35])+' - '+str(i[44])+' - $'+str(dollar_val)+' - '+str(i[32])+'% - '+due_Date#add due date
-							excel_matrix[2][row][col] = i[44]
+							excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date#add due date
+							excel_matrix[2][row][col] = status
 					else:
 						pass
 			else:
