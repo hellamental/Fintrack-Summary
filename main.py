@@ -11,6 +11,8 @@ import os
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
+
+
 print os.getcwd()
 
 #imports csv_filename as argument for csv load functino later on in the code. 
@@ -34,15 +36,17 @@ worksheet = workbook.add_worksheet('Summary sheet')
 #1. imports milestones from csv file and loads values into 2x dimensional matrix - in string format. 
 milestone_matrix = import_milestone(milestone_csv)
 contract_matrix = import_opportunities(contract_csv)
+print contract_matrix[0]
 
 print len(milestone_matrix), '//Number of Milestones'
 #creates a unique list from 29th element of milestone matrix
 ContractIdList = unique_list(milestone_matrix,'CONTRACT__C')
-
+print ContractIdList
 OppIdList = []
 for i in contract_matrix:
-    if i[282] in ContractIdList:
-        OppIdList.append(i[0])
+    prjct_contract = i['PROJECT_CONTRACT__C']
+    if prjct_contract in ContractIdList:
+        OppIdList.append(i['ID'])
     else:
         pass
 
@@ -69,16 +73,16 @@ except ValueError:
 ContractIDName = {}
 for i in ContractIdList:
     for j in contract_matrix:
-        if i == j[37]:
-            ContractIDName.update({str(j[37]):j[5]})
+        if i == j['CONTRACTID']:
+            ContractIDName.update({str(j['CONTRACTID']):j['NAME']})
         else:
             pass    
 
 ProjectIDName = {'':"Contract Level"}
 for i in OppIdList:
     for j in contract_matrix:
-        if i == j[0]:
-            ProjectIDName.update({str(j[0]):j[5]})
+        if i == j['ID']:
+            ProjectIDName.update({str(j['ID']):j['NAME']})
         else:
             pass    
 #print ContractIDName
@@ -141,8 +145,8 @@ for i in ContractIdList:
     
         RelOppIdList = ['']
         for j in contract_matrix:   
-            if j[282] == i: #if contract id of milestone matches the current contract id in the array, proceed to add opp id to list.
-                RelOppIdList.append(j[0])    
+            if j['PROJECT_CONTRACT__C'] == i: #if contract id of milestone matches the current contract id in the array, proceed to add opp id to list.
+                RelOppIdList.append(j['ID'])    
             else:
                 pass
         RelOppIdList = unique_list2(RelOppIdList)
