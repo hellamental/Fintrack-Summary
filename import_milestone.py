@@ -43,14 +43,14 @@ def import_accounts(csv_filename):
     f = open(csv_filename)
     csv_dictf = csv.reader(f)
 
-    account_names = [] #creates a new list for csv file to import milestones into.
+    account_matrix = [] #creates a new list for csv file to import milestones into.
 
     for row in csv_dictf:
-	   contract_matrix.append(row)
+	   account_matrix.append(row)
     
     #del contract_matrix[0]
     #print milestone_matrix
-    return contract_matrix
+    return account_matrix
 
 
 #import_milestone(csv_file)
