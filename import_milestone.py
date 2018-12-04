@@ -17,6 +17,8 @@ def import_milestone(csv_filename):
         else:
             pass
     """
+
+    do yo want to build a snow mannn
     print milestone_matrix[0]
     print "hello"
     milestone_matrix2 = []
