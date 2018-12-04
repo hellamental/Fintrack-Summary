@@ -215,7 +215,8 @@ def write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,work
 #what is the column with todays date // want to return the column reference in order to collapse all columns up to that date - 1 month
     today = datetime.today()
     for j in excel_matrix[0][0]:
-        if type(j)!=int and today >= j and today < j + timedelta(days=7):
+
+        if type(j)==type(today) and today >= j and today < j + timedelta(days=7):
             #print excel_matrix.index(j)
             #print type(oppID)
             today_col = excel_matrix[0][0].index(j) + excel_offset_col
@@ -224,9 +225,11 @@ def write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,work
             pass    
 
 #this code creates summary formulas at both far right side columns and underneath all rows
-    col_ref2 = col_reference(excel_offset_col+2,numcols+excel_offset_col)
+    col_ref2 = col_reference(excel_offset_col+4,numcols+excel_offset_col-7)
     #print col_ref2
     row = excel_offset_row
+    worksheet.write(row,numcols+excel_offset_col+1,'SUM OF MILESTONES')
+    row = excel_offset_row+1
     for i in range(0,numrows):
         row += 1 
         formula = '=SUM('+col_reference_row2(col_ref2,row,row)+')'
@@ -245,7 +248,7 @@ def write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,work
     worksheet.set_column(oppID_col, 40)
 
     collapse_column(excel_offset_col+4,today_col-8,worksheet)
-    collapse_column(today_col+12,numcols+excel_offset_col,worksheet)
+    collapse_column(today_col+12,numcols+excel_offset_col-7,worksheet)
     col_ref = col_reference(today_col-8,numcols+10)
     worksheet.set_column(col_ref, 14.28)
 

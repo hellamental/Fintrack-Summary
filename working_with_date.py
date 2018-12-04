@@ -110,7 +110,7 @@ def unique_list2(array):
 	return unique_list	
 
 def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName,contract_matrix): #creates matrix with width = toprowdatelist, length = uniqueID list, 
-	w, h, d = len(TopRowList)+3, len(UniqueIdList)+1, len(Matrix[0]);
+	w, h, d = len(TopRowList)+10, len(UniqueIdList)+1, len(Matrix[0]);
 	excel_matrix = [[[0 for x in range(w)] for y in range(h)] for z in range(d)]
 	
 	#adds weekstart dates to each element in first row of matrix.
@@ -121,6 +121,17 @@ def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName,contract_mat
 		x = i#.strftime("%d-%m-%Y")
 		excel_matrix[zcount][ycount][xcount]=x 
 		xcount += 1
+
+	ycount = 0
+	zcount = 0
+	xcount = len(excel_matrix[0][0])-3
+	excel_matrix[zcount][ycount][xcount]='PRE RFQ CONTRACT VALUE'	
+	xcount = len(excel_matrix[0][0])-2
+	excel_matrix[zcount][ycount][xcount]='POST RFQ CONTRACT VALUE'
+	xcount = len(excel_matrix[0][0])-1
+	excel_matrix[zcount][ycount][xcount]='POST RFQ VENDOR COST'
+
+
 
 	#adds Opportunity ID list to each element in first col of matrix.
 	ycount = 1
@@ -138,12 +149,18 @@ def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName,contract_mat
 		ycount += 1
 
 	ycount = 1
-	xcount = 2
+	x1count = 2
+	x2count = len(excel_matrix[0][0])-2
+	x3count = len(excel_matrix[0][0])-3
+	x4count = len(excel_matrix[0][0])-1
 	zcount = 0
 	for i in UniqueIdList:
 		for j in contract_matrix:
 			if j['ID'] == i:
-				excel_matrix[zcount][ycount][xcount] = j['STATUS']
+				excel_matrix[zcount][ycount][x1count] = j['STATUS']
+				excel_matrix[zcount][ycount][x2count] = '='+ str(j['POST_RFQ_CONTRACT_VALUE__C'])
+				excel_matrix[zcount][ycount][x3count] = '='+ str(j['TOTAL_PROJECT_VALUE__C'])
+				excel_matrix[zcount][ycount][x4count] = '='+ str(j['POST_RFQ_VENDOR_COST__C'])
 				ycount += 1
 			else:
 				pass
@@ -175,16 +192,18 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 				pass
 			else:
 				k = parse(due_Date)
-				#print excel_matrix[0]
+				#print type(k), "TYPE K"
 				for j in excel_matrix[0][0]: #for j in line 1 of excel matrix 
 					#print type(j), j, 'J'
 					#print type(k), k, 'K'
-					if type(j)!=int and k >= j and k < j + timedelta(days=7):
+					col = excel_matrix[0][0].index(j)
+					row = Idlist.index(oppID)+1
+					dep = 0
+					if type(j)==type(k) and k >= j and k < j + timedelta(days=7):
 					#print excel_matrix.index(j)
 						#print type(oppID)
 						#print j
-						col = excel_matrix[0][0].index(j)
-						row = Idlist.index(oppID)+1  #this line is causing an error for Opp IDs
+  						#this line is causing an error for Opp IDs
 						#print row
 						dep = 0
 						dollar_val = float(i['MILESTONE_VALUE__C'])
@@ -192,11 +211,11 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 							excel_matrix[dep][row][col] = '='+str(dollar_val)
 							excel_matrix[2][row][col] = status
 							excel_matrix[1][row][col] = str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date #add due date
-							
 						else:
 							excel_matrix[dep][row][col] = excel_matrix[dep][row][col]+'+'+str(dollar_val)
 							excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date#add due date
 							excel_matrix[2][row][col] = status
+	
 					else:
 						pass
 			pass
@@ -221,7 +240,7 @@ def excel_matrix_populator_site(milestone_matrix,excel_matrix,Id,Idlist,Mileston
 				for j in excel_matrix[0][0]: #for j in line 1 of excel matrix 
 					#print type(j), j, 'J'
 					#print type(k), k, 'K'
-					if type(j)!=int and k >= j and k < j + timedelta(days=7):
+					if type(j)==type(k) and k >= j and k < j + timedelta(days=7):
 					#print excel_matrix.index(j)
 						#print type(oppID)
 						#print j
@@ -266,7 +285,7 @@ def excel_matrix_populator_site2(milestone_matrix,excel_matrix,IdName,Idlist,Mil
 				for j in excel_matrix[0][0]: #for j in line 1 of excel matrix 
 					#print type(j), j, 'J'
 					#print type(k), k, 'K'
-					if type(j)!=int and k >= j and k < j + timedelta(days=7):
+					if type(j)==type(k) and k >= j and k < j + timedelta(days=7):
 					#print excel_matrix.index(j)
 						#print type(oppID)
 						#print j
