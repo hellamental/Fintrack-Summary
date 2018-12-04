@@ -109,13 +109,13 @@ def unique_list2(array):
 	unique_list = sorted(unique_list)
 	return unique_list	
 
-def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName):
-	w, h, d = len(TopRowList)+2, len(UniqueIdList)+1, len(Matrix[0]);
+def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName,contract_matrix): #creates matrix with width = toprowdatelist, length = uniqueID list, 
+	w, h, d = len(TopRowList)+3, len(UniqueIdList)+1, len(Matrix[0]);
 	excel_matrix = [[[0 for x in range(w)] for y in range(h)] for z in range(d)]
 	
 	#adds weekstart dates to each element in first row of matrix.
 	ycount = 0
-	xcount = 2
+	xcount = 3
 	zcount = 0
 	for i in TopRowList:    
 		x = i#.strftime("%d-%m-%Y")
@@ -127,7 +127,7 @@ def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName):
 	xcount = 1
 	zcount = 0 
 	for i in UniqueIdList:
-		excel_matrix[zcount][ycount][xcount]=i
+		excel_matrix[zcount][ycount][xcount]=str('https://verdia.my.salesforce.com/') + str(i) 
 		ycount += 1
 
 	ycount = 1
@@ -136,6 +136,17 @@ def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName):
 	for i in UniqueIdList:
 		excel_matrix[zcount][ycount][xcount] = ContractIDName[i]
 		ycount += 1
+
+	ycount = 1
+	xcount = 2
+	zcount = 0
+	for i in UniqueIdList:
+		for j in contract_matrix:
+			if j['ID'] == i:
+				excel_matrix[zcount][ycount][xcount] = j['STATUS']
+				ycount += 1
+			else:
+				pass
 
 	return excel_matrix
 

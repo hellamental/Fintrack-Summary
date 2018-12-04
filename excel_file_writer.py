@@ -240,11 +240,11 @@ def write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,work
 
 
 #function collapses the columns for dates earlier that one month ago. 
-    collapse_column(excel_offset_col+2,today_col-8,worksheet)
+    collapse_column(excel_offset_col+4,today_col-8,worksheet)
     oppID_col = colnum_string(excel_offset_col+1)+':'+colnum_string(excel_offset_col+1)
     worksheet.set_column(oppID_col, 40)
 
-    collapse_column(excel_offset_col+2,today_col-8,worksheet)
+    collapse_column(excel_offset_col+4,today_col-8,worksheet)
     collapse_column(today_col+12,numcols+excel_offset_col,worksheet)
     col_ref = col_reference(today_col-8,numcols+10)
     worksheet.set_column(col_ref, 14.28)

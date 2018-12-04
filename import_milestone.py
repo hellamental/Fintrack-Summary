@@ -43,7 +43,7 @@ def import_milestone(csv_filename):
 def import_accounts(csv_filename):
     
     f = open(csv_filename)
-    csv_dictf = csv.reader(f)
+    csv_dictf = csv.DictReader(f)
 
     account_matrix = [] #creates a new list for csv file to import milestones into.
 
@@ -70,7 +70,15 @@ def import_opportunities(csv_filename):
 
 	return opportunity_matrix	
 
-path = "C:\Users\mceda\OneDrive - Verdia Pty Ltd\Fintracker Export Project\Fintrack Script"
-os.chdir(path)
-csv_file = 'MilestoneExtract.csv'
-import_milestone(csv_file)
+def import_contract(csv_filename):
+	f = open(csv_filename)
+	csv_dictf = csv.DictReader(f)
+
+	contract_matrix = []
+
+	for row in csv_dictf:
+		contract_matrix.append(row)
+
+	#del opportunity_matrix[0]
+
+	return contract_matrix	
