@@ -32,6 +32,8 @@ workbook = xlsxwriter.Workbook(workbook_filename)
 
 #creates worksheet with name 'Summary Sheet'
 worksheet = workbook.add_worksheet('Summary sheet')
+worksheet.write('B2', "Project Fintracker")
+worksheet.write('B3', "Cashflow Summary")
 
 #1. imports milestones from csv file and loads values into 2x dimensional matrix - in string format. 
 milestone_matrix = import_milestone(milestone_csv)
@@ -127,7 +129,7 @@ excel_matrix_populator(milestone_matrix,excel_matrix,'ContractIdList',ContractId
 
 
 excel_offset_col = 1
-excel_offset_row = 12
+excel_offset_row = 8
 write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,workbook)
 
 
@@ -139,7 +141,7 @@ excel_matrix_populator(milestone_matrix,excel_matrix,'ContractIdList',ContractId
 
 write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,workbook)
 
-excel_offset_row = 12
+excel_offset_row = 8
 
 
 
@@ -162,8 +164,8 @@ for i in ContractIdList:
         #print RelOppIdList, '//OppIDList'
         #print len(RelOppIdList)
 
-        excel_offset_col = 3
-        excel_offset_row = 12
+        excel_offset_col = 1
+        excel_offset_row = 8
 
         milestone_types = ["Invoice_Milestone","Vendor_Payment_Milestone"]
         for milestone_type in milestone_types:  

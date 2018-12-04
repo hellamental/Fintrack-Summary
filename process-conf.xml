@@ -1,0 +1,113 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+    <bean id="csvMilestoneExtractProcess"
+          class="com.salesforce.dataloader.process.ProcessRunner"
+          singleton="false">
+      <description>csvAccountExtract job gets milestone info from salesforce and saves info into a CSV file."</description>
+        <property name="name" value="csvMilestoneExtract"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.debugMessages" value="false"/>
+                <entry key="sfdc.debugMessagesFile" value="c:\dataloader\samples\status\sfdcSoapTrace.log"/>
+                <entry key="sfdc.endpoint" value="https://login.salesforce.com"/>
+                <entry key="sfdc.username" value="mitchelldawson@verdia.com.au"/>
+                <!-- password specified below is invalid, please generate one using the encrypt.bat utility -->
+                <entry key="sfdc.password" value="7131c893f7f36d25ec88fd4da391901896c848280f54bb963b0161cf8f6ec9db"/>
+                <entry key="process.encryptionKeyFile" value="C:\Users\mceda\.dataloader\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Milestone__c"/>
+                <entry key="sfdc.extractionRequestSize" value="500"/>
+                <entry key="sfdc.extractionSOQL" value="Select Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, Amount_Paid_Excluding_GST__c, Amount_Paid__c, Bill_Due_Date__c, Contract_Id_Milestone_Type__c, Contract__c, Difference_in_Xero_Amount__c, Due_Date_Month__c, Due_Date__c, Financed_By__c, Get_Status_from_Xero__c, Invoice_Payment_Status__c, Invoice__c, Milestone_Name_Value__c, Milestone_Type__c, Milestone_Value__c, Opportunity_Stage__c, Opportunity__c, OwnerFirstNameEmail__c, Parent_Opportunity_Record_Type__c, Percentage__c, Post_RFQ_Value__c, Post_RFQ_Vendor_Cost__c, Project_Name_Contract__c, Project_Name__c, Purchase_Order_Number__c, Purchase_Order__c, Read_Only__c, Record_Type_Name__c, Remaining_Amount__c, Services__c, Status_Image__c, Status__c, Value_for_Cumulative_chart__c, Vendor_Invoice_Reference__c, Vendor_Name__c, Weighted_Value__c, Xero_ID__c, Xero_Reference__c, Number_of_Milestones_Date_Extensions__c, No_of_Milestone_Date_Extensions_Month__c, Duplicated_Milestone__c FROM Milestone__c"/>
+                <entry key="process.operation" value="extract"/>
+                <entry key="dataAccess.type" value="csvWrite"/>
+                <entry key="dataAccess.writeUTF8" value="true"/>
+                <entry key="dataAccess.name" value="C:\Salesforce\DataExports\MilestoneExtract.csv"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="csvOpportunityExtractProcess"
+          class="com.salesforce.dataloader.process.ProcessRunner"
+          singleton="false">
+      <description>csvOpportunityExtract job gets Opportunity info from salesforce and saves info into a CSV file."</description>
+        <property name="name" value="csvOpportunityExtract"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.debugMessages" value="false"/>
+                <entry key="sfdc.debugMessagesFile" value="c:\dataloader\samples\status\sfdcSoapTrace.log"/>
+                <entry key="sfdc.endpoint" value="https://login.salesforce.com"/>
+                <entry key="sfdc.username" value="mitchelldawson@verdia.com.au"/>
+                <!-- password specified below is invalid, please generate one using the encrypt.bat utility -->
+                <entry key="sfdc.password" value="7131c893f7f36d25ec88fd4da391901896c848280f54bb963b0161cf8f6ec9db"/>
+                <entry key="process.encryptionKeyFile" value="C:\Users\mceda\.dataloader\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Opportunity"/>
+                <entry key="sfdc.extractionRequestSize" value="500"/>
+                <entry key="sfdc.extractionSOQL" value="Select Id, IsDeleted, AccountId, RecordTypeId, IsPrivate, Name, Description, StageName, Amount, Probability, ExpectedRevenue, TotalOpportunityQuantity, CloseDate, Type, NextStep, LeadSource, IsClosed, IsWon, ForecastCategory, ForecastCategoryName, CampaignId, HasOpportunityLineItem, IsSplit, Pricebook2Id, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, FiscalQuarter, FiscalYear, Fiscal, LastViewedDate, LastReferencedDate, SyncedQuoteId, ContractId, HasOpenActivity, HasOverdueTask, Budget_Confirmed__c, Discovery_Completed__c, ROI_Analysis_Completed__c, Are_there_any_issues_complaints_from__c, Loss_Reason__c, Competitior__c, Direct_Lead_Source__c, Queue__c, Roof_space_available_for_Solar__c, Tenancy_Period__c, Existing_building_mgt_system__c, VDWhen_was_the_HVAC_system_last_serviced__c, VD_Amount__c, VD_Assessed__c, VD_Awarded__c, Finance_Settlement_Date__c, VD_Client_Interest__c, VD_Compliant__c, VD_Created__c, VD_Current_Opportunity_Owner__c, VD_Decision__c, VD_Do_you_have_a_HVAC_system_contractor__c, Solution_Designed_and_Specified__c, VD_Embedded_Networks__c, VD_Existing_Solar__c, VD_Finance_Approved__c, VD_HVAC_system_contractor_name__c, VD_Has_the_lighting_or_HVAC_systems_been__c, Create_Date_Finance_Settlement__c, VD_Invoice_Issued__c, VD_Irregular__c, P_C_Terms_Released_to_Partners__c, VD_Landlord__c, Year_BMS_Last_Serviced__c, VD_Material_Spec__c, VD_Meters__c, VD_NMI__c, VD_No_of_Tenants__c, VD_Period_of_the_bill__c, Opportunity_on_Incentive_Program__c, VD_Purchase_Order_Received_from_Client__c, VD_ROI__c, VD_Reason__c, VD_Received_Documentation_Stage__c, VD_Received_Finance_Stage__c, VD_Received__c, VD_Roof_space_available_for_solar__c, VD_Sent__c, Solution_Connected_and_Program_Completed__c, VD_Site_inspection__c, Contract_Signed_Date__c, VD_Tariff_Structure__c, VD_Tenancy_Status__c, Progress_to_Opp_Date_for_Westpac__c, Total_Annual_Consumption_kWh__c, VD_Warehoused_Through__c, Annual_Savings__c, Finance_Loss_Reason__c, VD_Project_Value__c, VD_Bank_RM_Contact__c, VD_Industry__c, VD_Partner__c, i__DaysSinceLastMail__c, i__LastInboundMail__c, i__LastInboundSent__c, i__LastInboundTime__c, i__LastMailSent__c, i__LastMailTimeDelta__c, i__LastMailTime__c, i__LastMail__c, i__LastOutboundMail__c, i__LastOutboundSent__c, i__LastOutboundTime__c, Ops_Manager__c, Ops_Analyst__c, Business_Center__c, Time_from_Customer_Meeting_to_Contract__c, Delivery_Stage_Picked_Date__c, Verdia_Revenue__c, Verdia_Revenue_Dollar__c, Initial_Client_Meeting__c, Client_Investment_Meeting__c, Delivery_Manager__c, Time_from_Contract_to_Delivery__c, Large_Programs_Category__c, Client_Interested_Date__c, Lead_Duration_Days__c, Time_from_Opp_to_Customer_Meeting__c, Time_from_Initial_to_Investment_Meeting__c, Investment_Meeting_to_Client_Interest__c, Asset_Management_End_Date__c, Asset_Management_Period_Years__c, Time_remaining_before_Contract_Date__c, AM_Confirmed_Data_Integrity__c, Asset_Management_Required__c, Milestone_1__c, Milestone_2__c, Ongoing_opportunity__c, Milestone_3__c, Previous_Stage__c, Previous_Stage_Change_Date__c, Time_from_Lead_to_Opp__c, Current_Stage__c, Opportunity_Number__c, Opportunity_Counter__c, Unique_Opportunity_ID__c, Bank_RM_Title__c, Ongoing_Opportunity_Project_Value__c, Network_Study__c, RFQ_Sent__c, Recommendation__c, Average_Daily_Consumption_kWh__c, Peak_Rate_Bundled_dollars__c, Off_Peak_Rate_Bundled_dollars__c, Shoulder_Rate_Bundled_dollars__c, Generation_Management_System__c, Monitoring__c, DNSP__c, Delivery_Type__c, Engineer_Responsible__c, Opportunity_Street__c, Opportunity_City__c, Opportunity_State__c, Opportunity_Postal_Code__c, BMS_Brand__c, HVAC_Type__c, Embedded_Network_Provider__c, Asset_Finance_Opportunity__c, WIB_Sector__c, Partner_VB__c, Partner_Standard_Commission__c, Milestone_4__c, Total_Partner_Revenue__c, Partner_Revenue_Adjustment_Detail__c, Solution_Type__c, Partner_Bank__c, Solution_List__c, Partner_Revenue_Adjustment__c, RFQ_Partner_Recommended__c, Milestone_5__c, High_level_Scope_Confirmed__c, Client_Met_and_Interest_Confirmed__c, Detailed_Assessment_Completed__c, Finance_Confirmed__c, Preliminary_Assessment_Completed__c, Proposal_Presented_to_Client__c, Project_Information_and_Data_Received__c, Contract_Presented_to_Client__c, Milestone_6__c, Recommendation_Developed__c, Network_Application_Submitted__c, BA_Responsible__c, Installation_Commenced__c, Practical_Completion_Achieved__c, Milestone_7__c, Partner_Salesperson__c, Milestone_1_Date__c, Milestone_2_Date__c, Authority_to_Install_Received__c, Contract_and_Privacy_Signed__c, Risked_Project_Value__c, Solution_List_Text__c, State_Code__c, AFP_to_check_bankability_of_the_client__c, AFP_to_start_Finance_Documents__c, Status_Closed_Selected__c, Total_Last_Month__c, Closed_This_Month__c, New_This_Month__c, Forecast_Category_Develop_Selected__c, Won_This_Month__c, Total_Ongoing_Opportunities__c, Total_Ongoing_and_Settled_Projects__c, RFQ_Site_Visit_To_Date__c, RFQ_Site_Visit_From_Date__c, RFQ_Response_Due_by_Date__c, Report_Stage__c, Asset_Management_Start_Date__c, Authority_to_Install_Received_Council__c, Project_Completed_Date_Selected__c, Settlement_Date_Selected__c, Milestone_3_Date__c, Milestone_4_Date__c, Milestone_5_Date__c, Milestone_6_Date__c, Milestone_7_Date__c, Validation_Trigger_Off__c, Finance_Approved_Date__c, Finance_Lost_Date__c, Finance_Declined_Date__c, Brokerage_Remittance_Received__c, Authority_to_Install_Received_Network__c, Building_over_30_years_old__c, Business_case_updated__c, Client_has_agreed_to_proceed__c, Client_opted_for_Asset_Management__c, Client_opted_for_paid_Feasibility_Study__c, Client_wants_greater_cost_confidence__c, Connected_at_high_voltage_1000_Volts__c, Consultant_Reports_Received__c, Consultant_Reports_Requested__c, Consultant_Reports__c, Contract_Default_Status__c, Contract_Presented_to_Client_DT__c, Contract_Signed_DT__c, Contract_Signed_Date_Formula__c, Contract_and_Privacy_Signed_DT__c, Current_Step__c, Data_Migration_Contract_Number__c, Detailed_Assessment_Completed_DT__c, Dev_Application_Submitted_Council__c, Draft_Report_Complete__c, Energy_Bills_Received__c, Estimated_Closed_Date__c, External_reports_required__c, Feasibility_Study_completed__c, Final_Report_Approved__c, Finance_quote_requested__c, Financed_by__c, Ground_Mount_or_Roof_Top_System__c, Installation_Commenced_DT__c, Installation_Commenced_Start__c, Interval_Data_Received__c, Interval_Data_Request_Submitted__c, Metro_Regional__c, More_than_1_NMI_at_this_site__c, Network_Application_Submitted_DT__c, Next_Meeting_Date__c, Next_Steps__c, Number_of_Close_Date_Extensions_Month__c, Number_of_Close_Date_Extensions__c, Number_of_Sites__c, Obstacle__c, Opportunity_Allocation__c, P_C_Terms_Released_to_Partners_DT__c, Passed_to_Partner__c, Post_RFQ_Project_Value__c, Post_RFQ_Vendor_Cost__c, Practical_Completion_Achieved_DT__c, Pre_Post_RFQ_Value__c, Preliminary_Assessment_Completed_DT__c, Presentation_Documents_Created__c, Project_Contract__c, Project_Cost_Estimate_Updated__c, Project_Milestone_Start_Date__c, Project_Name__c, Project_Value_Won__c, Project_Value_for_Invoice_Milestone__c, Project_Value_for_PO_Milestone__c, Proposal_Presented_to_Client_DT__c, Recommendation_Developed_DT__c, Report_Delivered_to_Advisory_Contact__c, Sales_Opportunity__c, Scheduled_Report_Delivery_Date__c, Scheduled_Site_Visit_Date__c, Signed_client_LOA_received__c, Site_Name__c, Site_Type__c, Solution_Connected_Program_CompletedDT__c, Solution_Designed_and_Specified_DT__c, System_Size_500kW__c, System_Size_KW_to_be_investigated__c, Updated_proposal_presented_to_client__c, Verdia_Revenue2_Dollar__c, Verdia_Revenue_Formula_Percentage__c, Verdia_Site_Visit_Conducted__c, What_Products_are_being_considered__c, Update_Action__c, Opportunity_ID__c, Record_Type_ID__c, Ops_Administrator__c, Ops_Junior_Engineer__c, Date_Won__c, Weighted_Project_Value__c, Sales_Team__c FROM Opportunity"/>
+                <entry key="process.operation" value="extract"/>
+                <entry key="dataAccess.type" value="csvWrite"/>
+                <entry key="dataAccess.writeUTF8" value="true"/>
+                <entry key="dataAccess.name" value="C:\Salesforce\DataExports\OpportunityExtract.csv"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="csvContractExtractProcess"
+          class="com.salesforce.dataloader.process.ProcessRunner"
+          singleton="false">
+      <description>csvContractExtract job gets contract info from salesforce and saves info in a CSV file."</description>
+        <property name="name" value="csvContractExtract"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.debugMessages" value="false"/>
+                <entry key="sfdc.debugMessagesFile" value="c:\dataloader\samples\status\sfdcSoapTrace.log"/>
+                <entry key="sfdc.endpoint" value="https://login.salesforce.com"/>
+                <entry key="sfdc.username" value="mitchelldawson@verdia.com.au"/>
+                <!-- password specified below is invalid, please generate one using the encrypt.bat utility -->
+                <entry key="sfdc.password" value="7131c893f7f36d25ec88fd4da391901896c848280f54bb963b0161cf8f6ec9db"/>
+                <entry key="process.encryptionKeyFile" value="C:\Users\mceda\.dataloader\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Contract"/>
+                <entry key="sfdc.extractionRequestSize" value="500"/>
+                <entry key="sfdc.extractionSOQL" value="Select Id, AccountId, OwnerExpirationNotice, StartDate, EndDate, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingStateCode, BillingCountryCode, BillingLatitude, BillingLongitude, BillingGeocodeAccuracy, BillingAddress, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry, ShippingStateCode, ShippingCountryCode, ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, ShippingAddress, ContractTerm, OwnerId, Status, CompanySignedId, CompanySignedDate, CustomerSignedId, CustomerSignedTitle, CustomerSignedDate, SpecialTerms, ActivatedById, ActivatedDate, StatusCode, Description, IsDeleted, ContractNumber, LastApprovedDate, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, ABN_CAN__c, Asset_Management_End_Date__c, Asset_Management_Period_Years__c, Asset_Management_Start_Date__c, Business_Name__c, Business_Short_form_Name__c, Client_opted_for_Asset_Management__c, Contact_Email_Address__c, Contact_Name__c, Contact_Phone_Number__c, Contact__c, Data_Migration_Contract_Number__c, Deposit_Created_Data_Migration__c, Financed_by__c, Forecast_End_Date__c, Invoice_Variance_Value__c, Milestone_Ready_To_Create__c, Milestones_Payment_without_feasibility__c, Notice_Address__c, Opportunity_Allocation__c, Overdue_Payment__c, PO_Value__c, PO_Variance_Value__c, Post_RFQ_Comments__c, Post_RFQ_Contract_Value__c, Post_RFQ_Vendor_Cost__c, Pre_Post_Contract_Value__c, Project_Value_for_Invoice_Milestone__c, Project_Value_for_PO_Milestone__c, Remaining_Payment__c, Sales_Opportunity__c, Total_Milestones_Payment__c, Total_Project_Value__c, Unpaid_Invoice__c, Contract_ID__c, Contracts__c FROM Contract"/>
+                <entry key="process.operation" value="extract"/>
+                <entry key="dataAccess.type" value="csvWrite"/>
+                <entry key="dataAccess.writeUTF8" value="true"/>
+                <entry key="dataAccess.name" value="C:\Salesforce\DataExports\ContractExtract.csv"/>
+            </map>
+        </property>
+    </bean>
+
+        <bean id="csvAccountExtractProcess"
+          class="com.salesforce.dataloader.process.ProcessRunner"
+          singleton="false">
+      <description>csvAccountExtract job gets contract info from salesforce and saves info in a CSV file."</description>
+        <property name="name" value="csvAccountExtract"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.debugMessages" value="false"/>
+                <entry key="sfdc.debugMessagesFile" value="c:\dataloader\samples\status\sfdcSoapTrace.log"/>
+                <entry key="sfdc.endpoint" value="https://login.salesforce.com"/>
+                <entry key="sfdc.username" value="mitchelldawson@verdia.com.au"/>
+                <!-- password specified below is invalid, please generate one using the encrypt.bat utility -->
+                <entry key="sfdc.password" value="7131c893f7f36d25ec88fd4da391901896c848280f54bb963b0161cf8f6ec9db"/>
+                <entry key="process.encryptionKeyFile" value="C:\Users\mceda\.dataloader\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Account"/>
+                <entry key="sfdc.extractionRequestSize" value="500"/>
+                <entry key="sfdc.extractionSOQL" value="Select Id, IsDeleted, MasterRecordId, Name, Type, RecordTypeId, ParentId, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingStateCode, BillingCountryCode, BillingLatitude, BillingLongitude, BillingGeocodeAccuracy, BillingAddress, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry, ShippingStateCode, ShippingCountryCode, ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, ShippingAddress, Phone, Fax, AccountNumber, Website, PhotoUrl, Sic, Industry, AnnualRevenue, NumberOfEmployees, Ownership, TickerSymbol, Description, Rating, Site, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, Jigsaw, JigsawCompanyId, AccountSource, SicDesc, Job_Title__c, VD_ABN__c, VD_ACN__c, VD_Annual_Revenue__c, VD_Date_of_Last_Energy_Audit__c, VD_Desciption__c, VD_Do_you_use_an_Energy_Broker__c, VD_Energy_Broker__c, VD_Existing_Bank_Financier__c, VD_Finance_Solution_Provider__c, VD_Head_Office__c, VD_No_of_Properties__c, VD_Type__c, VD_When_was_the_network_tariff_demand__c, i__DaysSinceLastMail__c, i__LastInboundMail__c, i__LastInboundSent__c, i__LastInboundTime__c, i__LastMailSent__c, i__LastMailTimeDelta__c, i__LastMailTime__c, i__LastMail__c, i__LastOutboundMail__c, i__LastOutboundSent__c, i__LastOutboundTime__c, Number_of_Opportunities__c, Unique_Account_Number__c, Incentive_Approved__c, Account_Lead_Record_Type_Hidden__c, States_where_the_partner_can_work__c, Insurance_PI__c, Insurance_PI_Amount__c, Insurance_PI_Expiry_Date__c, Insurance_PL__c, Insurance_PL_Amount__c, Insurance_PL_Expiry_Date__c, Partner_Review_Date__c, ISO_Accreditation_9001_Completed__c, ISO_Accreditation_9001_Expiry_Date__c, ISO_Accreditation_18001_Completed__c, ISO_Accreditation_18001_Expiry_Date__c, ISO_Accreditation_14001_Completed__c, ISO_Accreditation_14001_Expiry_Date__c, ISO_Accreditation_50015_Completed__c, ISO_Accreditation_50015_Expiry_Date__c, Salespeople_are_Trained__c, RFQ_Email_Address__c, Xero_Account_Id__c, Account_ID__c, Accounts__c, Industry_Sub_Sector__c, Partners_Solution_Type__c, Solutions_Offered_by_Partner__c, Partner_Services_Offered__c, Partner_Role_Approved_for_by_Verdia__c, Annual_Revenue_FY__c, Forecast_Revenue_FY__c, Forecast_Revenue__c, VD_Email_Address__c FROM Account"/>
+                <entry key="process.operation" value="extract"/>
+                <entry key="dataAccess.type" value="csvWrite"/>
+                <entry key="dataAccess.writeUTF8" value="true"/>
+                <entry key="dataAccess.name" value="C:\Salesforce\DataExports\AccountExtract.csv"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>
