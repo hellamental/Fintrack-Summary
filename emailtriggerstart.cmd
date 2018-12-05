@@ -1,1 +1,1 @@
-Powershell.exe -ExecutionPolicy Unrestricted -File C:\Salesforce\DataExports\Testbatch.bat
+RUN c:\path_to_scripts\my_script.cmd
