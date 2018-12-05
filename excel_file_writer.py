@@ -234,6 +234,9 @@ def write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,work
         row += 1 
         formula = '=SUM('+col_reference_row2(col_ref2,row,row)+')'
         worksheet.write_formula(row-1,numcols+excel_offset_col+1,formula,money_format)
+        formula = '=IF(XI'+str(row)+'=0,XH'+str(row)+',XI'+str(row)+')-XL'+str(row)
+        worksheet.write_formula(row-1,numcols+excel_offset_col+2,formula,money_format)
+
     col = excel_offset_col+1
     for i in range(0,numcols+2):
         col_ref2 = col_reference(col,col)
@@ -248,7 +251,7 @@ def write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,work
     worksheet.set_column(oppID_col, 40)
 
     collapse_column(excel_offset_col+4,today_col-8,worksheet)
-    collapse_column(today_col+12,numcols+excel_offset_col-7,worksheet)
+    collapse_column(today_col+12,numcols+excel_offset_col-4,worksheet)
     col_ref = col_reference(today_col-8,numcols+10)
     worksheet.set_column(col_ref, 14.28)
 

@@ -110,7 +110,7 @@ def unique_list2(array):
 	return unique_list	
 
 def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName,contract_matrix): #creates matrix with width = toprowdatelist, length = uniqueID list, 
-	w, h, d = len(TopRowList)+10, len(UniqueIdList)+1, len(Matrix[0]);
+	w, h, d = len(TopRowList)+7, len(UniqueIdList)+1, len(Matrix[0]);
 	excel_matrix = [[[0 for x in range(w)] for y in range(h)] for z in range(d)]
 	
 	#adds weekstart dates to each element in first row of matrix.
