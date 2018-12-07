@@ -167,6 +167,65 @@ def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName,contract_mat
 
 	return excel_matrix
 
+def matrix_creator_3D2(TopRowList,UniqueIdList,Matrix,ContractIDName,opportunity_matrix): #creates matrix with width = toprowdatelist, length = uniqueID list, 
+	w, h, d = len(TopRowList)+7, len(UniqueIdList)+1, len(Matrix[0]);
+	excel_matrix = [[[0 for x in range(w)] for y in range(h)] for z in range(d)]
+	
+	#adds weekstart dates to each element in first row of matrix.
+	ycount = 0
+	xcount = 3
+	zcount = 0
+	for i in TopRowList:    
+		x = i#.strftime("%d-%m-%Y")
+		excel_matrix[zcount][ycount][xcount]=x 
+		xcount += 1
+
+	ycount = 0
+	zcount = 0
+	xcount = len(excel_matrix[0][0])-3
+	excel_matrix[zcount][ycount][xcount]='PRE RFQ PROJECT VALUE'	
+	xcount = len(excel_matrix[0][0])-2
+	excel_matrix[zcount][ycount][xcount]='POST RFQ PROJECT VALUE'
+	xcount = len(excel_matrix[0][0])-1
+	excel_matrix[zcount][ycount][xcount]='POST RFQ VENDOR COST'
+
+
+
+	#adds Opportunity ID list to each element in first col of matrix.
+	ycount = 1
+	xcount = 1
+	zcount = 0 
+	for i in UniqueIdList:
+		excel_matrix[zcount][ycount][xcount]=str('https://verdia.my.salesforce.com/') + str(i) 
+		ycount += 1
+
+	ycount = 1
+	xcount = 0
+	zcount = 0
+	for i in UniqueIdList:
+		excel_matrix[zcount][ycount][xcount] = ContractIDName[i]
+		ycount += 1
+
+	ycount = 1
+	x1count = 2
+	x2count = len(excel_matrix[0][0])-2
+	x3count = len(excel_matrix[0][0])-3
+	x4count = len(excel_matrix[0][0])-1
+	zcount = 0
+	for i in UniqueIdList:
+		for j in opportunity_matrix:
+			if j['ID'] == i:
+				ycount += 1
+				excel_matrix[zcount][ycount][x1count] = j['STAGENAME']
+				excel_matrix[zcount][ycount][x2count] = '='+ str(j['POST_RFQ_PROJECT_VALUE__C'])
+				excel_matrix[zcount][ycount][x3count] = '='+ str(j['VD_PROJECT_VALUE__C'])
+				excel_matrix[zcount][ycount][x4count] = '='+ str(j['POST_RFQ_VENDOR_COST__C'])
+				
+			else:
+				pass
+
+	return excel_matrix
+
 def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone_Type):
 	
 	#print IdName

@@ -173,7 +173,7 @@ for i in ContractIdList:
         for milestone_type in milestone_types:  
                 
             excel_matrix = []
-            excel_matrix = matrix_creator_3D(TopRowDateList,RelOppIdList,milestone_matrix,ProjectIDName,contract_matrix)
+            excel_matrix = matrix_creator_3D2(TopRowDateList,RelOppIdList,milestone_matrix,ProjectIDName,opportunity_matrix)
             
             excel_matrix_populator_site2(milestone_matrix,excel_matrix,'OppIdList',RelOppIdList,milestone_type,i) # this is where the issue occurs on the second contract ID
             write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet_name,workbook)    
