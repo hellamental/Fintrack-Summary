@@ -71,14 +71,16 @@ def import_opportunities(csv_filename):
 	return opportunity_matrix	
 
 def import_contract(csv_filename):
-	f = open(csv_filename)
-	csv_dictf = csv.DictReader(f)
+    
+    f = open(csv_filename)
+    csv_dictf = csv.DictReader(f)
 
-	contract_matrix = []
+    contract_matrix = [] #creates a new list for csv file to import milestones into.
 
-	for row in csv_dictf:
-		contract_matrix.append(row)
+    for row in csv_dictf:
+        if(row['STATUS']=='Active'):
+            contract_matrix.append(row)
+        else:
+            pass
 
-	#del opportunity_matrix[0]
-
-	return contract_matrix	
+    return contract_matrix

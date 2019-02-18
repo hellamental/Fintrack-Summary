@@ -18,8 +18,8 @@ print os.getcwd()
 #imports csv_filename as argument for csv load functino later on in the code. 
 script, milestone_csv, opportunity_csv, account_csv, contract_csv = argv
 
-#path = "C:\Users\Mitchell.Dawson\Desktop"
-path = r"C:\Users\Mitchell.Dawson\Verdia Pty Ltd\Verdia Internal - Autogen Fintracker"
+path = "C:\Users\Mitchell.Dawson\Desktop"
+#path = r"C:\Users\Mitchell.Dawson\Verdia Pty Ltd\Verdia Internal - Autogen Fintracker"
 #path = "C:\Users\mceda\Desktop"
 os.chdir(path)
 print os.getcwd()
