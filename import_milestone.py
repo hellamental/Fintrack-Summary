@@ -12,7 +12,7 @@ def import_milestone(csv_filename):
     milestone_matrix = [] #creates a new list for csv file to import milestones into.
 
     for row in csv_dictf:
-        if(row['STATUS__C']!='Forecast' and row['DUPLICATED_MILESTONE__C']=='false'):
+        if(row['STATUS__C']!='Forecast' and row['DUPLICATED_MILESTONE__C']=='false' and row['CONTRACT_STAGE__C']=='Active'):
             milestone_matrix.append(row)
         else:
             pass
