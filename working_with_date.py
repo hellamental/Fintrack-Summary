@@ -247,6 +247,7 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 			prjct_name = i['PROJECT_NAME_CONTRACT__C'] #i[35]
 			status = i['STATUS__C'] #i[44]
 			project_ID = i['OPPORTUNITY__C']
+			comment = i['COMMENT__C']
 			
 			if due_Date == '':
 				pass
@@ -270,10 +271,10 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 						if excel_matrix[dep][row][col] == 0:
 							excel_matrix[dep][row][col] = '='+str(dollar_val)
 							excel_matrix[2][row][col] = status
-							excel_matrix[1][row][col] = str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)#add due date
+							excel_matrix[1][row][col] = str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)+' - '+str(comment)#add due date
 						else:
 							excel_matrix[dep][row][col] = excel_matrix[dep][row][col]+'+'+str(dollar_val)
-							excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)#add due date
+							excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)+' - '+str(comment)#add due date
 							excel_matrix[2][row][col] = status
 	
 					else:
@@ -340,6 +341,7 @@ def excel_matrix_populator_site2(milestone_matrix,excel_matrix,IdName,Idlist,Mil
 			CntrctId = i['CONTRACT__C'] #i[17]
 			status = i['STATUS__C'] #i[44]
 			project_ID = i['OPPORTUNITY__C']
+			comment = i['COMMENT__C']
 
 			if due_Date != '' and ContractId == CntrctId:
 				k = parse(due_Date)
@@ -359,11 +361,11 @@ def excel_matrix_populator_site2(milestone_matrix,excel_matrix,IdName,Idlist,Mil
 						if excel_matrix[dep][row][col] == 0:
 							excel_matrix[dep][row][col] = '='+str(dollar_val)
 							excel_matrix[2][row][col] = status
-							excel_matrix[1][row][col] = str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID) #add due date
+							excel_matrix[1][row][col] = str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)+' - '+str(comment) #add due date
 							
 						else:
 							excel_matrix[dep][row][col] = excel_matrix[dep][row][col]+'+'+str(dollar_val)
-							excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)#add due date
+							excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)+' - '+str(comment)#add due date
 							excel_matrix[2][row][col] = status
 					else:
 						pass

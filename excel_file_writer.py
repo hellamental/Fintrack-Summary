@@ -46,7 +46,7 @@ def collapse_column(start_col, finish_col, worksheet):
     #print range1
     #print range2
     worksheet.set_column(range1, None, None, {'level': 1, 'hidden': True})
-    worksheet.set_column(range2, None, None, {'collapsed': True})
+    worksheet.set_column(range2, None, None, {'collapsed': False})
 
 #collapse_column(5,10)
 
