@@ -19,7 +19,8 @@ print os.getcwd()
 script, milestone_csv, opportunity_csv, account_csv, contract_csv = argv
 
 #path = "C:\Users\Mitchell.Dawson\Desktop"
-path = r"C:\Users\Mitchell.Dawson\Verdia Pty Ltd\Verdia Internal - Autogen Fintracker"
+#path = r"C:\Users\Mitchell.Dawson\Verdia Pty Ltd\Verdia Internal - Autogen Fintracker"
+path = r"C:\Users\Mitchell.Dawson\Verdia Pty Ltd\Verdia Internal - Project Delivery\00 PMO General\Project Financials\Autogen Fintracker"    
 #path = "C:\Users\mceda\Desktop"
 os.chdir(path)
 print os.getcwd()
