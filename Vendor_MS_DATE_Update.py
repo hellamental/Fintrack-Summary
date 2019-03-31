@@ -1,5 +1,5 @@
 from sys import argv
-import xlsxwriter
+#import xlsxwriter
 import os
 import csv
 from datetime import datetime, date, timedelta
@@ -38,6 +38,14 @@ for i in milestone_matrix:
 path = "C:\Users\Mitchell.Dawson\Desktop" #work machine
 os.chdir(path)
 
-workbook_filename = "MilestoneDateUpdate.xlsx" 
+"""workbook_filename = "MilestoneDateUpdate.xlsx" 
 print workbook_filename
 workbook = xlsxwriter.Workbook(workbook_filename)
+"""
+
+with open('Vendor_Bringforward.csv', mode='wb') as vendor_bringforward:
+    milestone_write = csv.writer(vendor_bringforward, delimiter=',')
+
+    milestone_write.writerow(['ID','DUE_DATE__C'])
+    for i in milestone_matrix:
+        milestone_write.writerow([i['ID'], i['DUE_DATE__C']])
