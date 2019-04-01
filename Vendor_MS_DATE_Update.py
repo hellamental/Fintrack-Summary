@@ -1,13 +1,8 @@
 from sys import argv
-#import xlsxwriter
 import os
 import csv
 from datetime import datetime, date, timedelta
 from dateutil.parser import *
-#import sys
-#reload(sys)
-#sys.setdefaultencoding('utf-8')
-
 
 script, Milestones_Extract = argv
  
@@ -23,11 +18,6 @@ for row in csv_dictf:
     else:
         pass
 
-#print milestone_matrix['DUE_DATE__C'] 
-
-#for i in milestone_matrix:
-#    print i['ID'], i['DUE_DATE__C'] 
-
 for i in milestone_matrix:
     x = today + timedelta(days=8)
     i['DUE_DATE__C'] = x.strftime("%d/%m/%Y")
@@ -37,11 +27,6 @@ for i in milestone_matrix:
 #path = "C:\Users\mceda\Desktop" #personal home pc
 path = "C:\Users\Mitchell.Dawson\Desktop" #work machine
 os.chdir(path)
-
-"""workbook_filename = "MilestoneDateUpdate.xlsx" 
-print workbook_filename
-workbook = xlsxwriter.Workbook(workbook_filename)
-"""
 
 with open('Vendor_Bringforward.csv', mode='wb') as vendor_bringforward:
     milestone_write = csv.writer(vendor_bringforward, delimiter=',')
