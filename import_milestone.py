@@ -12,7 +12,7 @@ def import_milestone(csv_filename):
     milestone_matrix = [] #creates a new list for csv file to import milestones into.
 
     for row in csv_dictf:
-        if(row['STATUS__C']!='Forecast' and row['DUPLICATED_MILESTONE__C']=='false' and row['CONTRACT_STAGE__C']!='Inactive'):
+        if(row['STATUS__C']!='Forecast' and row['DUPLICATED_MILESTONE__C']=='false'): #and row['CONTRACT_STAGE__C']!='Inactive' and row['OPPORTUNITY_STAGE__C']!='Closed Lost'):
             milestone_matrix.append(row)
         else:
             pass
@@ -78,9 +78,11 @@ def import_contract(csv_filename):
     contract_matrix = [] #creates a new list for csv file to import milestones into.
 
     for row in csv_dictf:
+        contract_matrix.append(row)
+        """
         if(row['STATUS']!='Inactive'):
             contract_matrix.append(row)
         else:
             pass
-
+        """
     return contract_matrix
