@@ -12,29 +12,14 @@ def import_milestone(csv_filename):
     milestone_matrix = [] #creates a new list for csv file to import milestones into.
 
     for row in csv_dictf:
-        if(row['STATUS__C']!='Forecast' and row['DUPLICATED_MILESTONE__C']=='false'): #and row['CONTRACT_STAGE__C']!='Inactive' and row['OPPORTUNITY_STAGE__C']!='Closed Lost'):
-            milestone_matrix.append(row)
+        if(row['STATUS__C']!='Forecast' and row['DUPLICATED_MILESTONE__C']=='false' and row['CONTRACT_STAGE__C']!='Inactive' and row['OPPORTUNITY_STAGE__C']!='Closed Lost'):
+            if(row['CONTRACT__C']=='' and row['OPPORTUNITY__C']==''):
+                pass
+            else:
+                milestone_matrix.append(row)
         else:
             pass
-    """
 
-    do yo want to build a snow mannn
-    print milestone_matrix[0]
-    print "hello"
-    milestone_matrix2 = []
-    for row in csv_f:
-        if(row[44]!='Forecast' and row[53]=='false'):
-	    #list_of_IDs.append(row[0])
-	    #count += 1
-            milestone_matrix2.append(row)
-        else:
-            pass
-    print len(milestone_matrix2), '//len before cull'
-    del milestone_matrix2[0]
-    #print len(milestone_matrix), '//len after cull'
-
-    #print milestone_matrix
-    """
     return milestone_matrix
 
 
@@ -78,11 +63,11 @@ def import_contract(csv_filename):
     contract_matrix = [] #creates a new list for csv file to import milestones into.
 
     for row in csv_dictf:
-        contract_matrix.append(row)
-        """
+        #contract_matrix.append(row)
+        
         if(row['STATUS']!='Inactive'):
             contract_matrix.append(row)
         else:
             pass
-        """
+        
     return contract_matrix
