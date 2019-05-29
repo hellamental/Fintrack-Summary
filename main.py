@@ -20,7 +20,7 @@ script, milestone_csv, opportunity_csv, account_csv, contract_csv = argv
 
 #path = "C:\Users\Mitchell.Dawson\Desktop"
 #path = r"C:\Users\Mitchell.Dawson\Verdia Pty Ltd\Verdia Internal - Autogen Fintracker"
-path = r"C:\Users\Mitchell.Dawson\Verdia Pty Ltd\Verdia Internal - Project Delivery\00 PMO General\Project Financials\Autogen Fintracker"    
+path = r"C:\Users\Mitchell.Dawson\Verdia Pty Ltd\Verdia Internal - Documents\Project Delivery\00 PMO General\Project Financials\Autogen Fintracker"    
 #path = "C:\Users\mceda\Desktop"
 os.chdir(path)
 print os.getcwd()
@@ -44,12 +44,11 @@ opportunity_matrix = import_opportunities(opportunity_csv)
 account_matrix = import_accounts(account_csv)
 contract_matrix = import_contract(contract_csv)
 
-#print account_matrix[0] 
 
 print len(milestone_matrix), '//Number of Milestones'
 #creates a unique list of the contract numbers in the milestone matrix
 ContractIdList = unique_list(milestone_matrix,'CONTRACT__C')
-#print ContractIdList
+#loops through opportunity matrix and adds project ID to OppIDList if the Contract ID is present in the Contract ID list - to capture only opportunities with milestones
 OppIdList = []
 for i in opportunity_matrix:
     prjct_contract = i['PROJECT_CONTRACT__C']
@@ -58,27 +57,18 @@ for i in opportunity_matrix:
     else:
         pass
 
-#print OppIdList
 
 print len(ContractIdList), '//Contract Id List'
+#try to find a blank contract ID in the contract ID list - if there is, remove it - if not, move on
 try: 
     ind = ContractIdList.index('')
     del ContractIdList[ind]
 except ValueError:
     pass
-#del ContractIdList[0]
-
-#print ContractIdList
-#print OppIdList
-#print ContractIdList
-#del OppIdList[0] #deletes the heading to leave only values of list.
-#del ContractIdList[0]
-#print OppIdList
-#x = OppIdList.index('') #identfies the position of any blanks and assigns index to x variable
-#del OppIdList[x] deletes x indexed value from list.
 
 print ContractIdList
 
+#create a dictionary of contract IDs matched with their contract ID number in the opportunity matrix and make the name that of the sales opportunity
 ContractIDName = {}
 for i in ContractIdList:
     for j in opportunity_matrix:
@@ -87,6 +77,7 @@ for i in ContractIdList:
         else:
             pass    
 
+#create a dictionary of project IDs with their names
 ProjectIDName = {'':"Contract Level"}
 for i in OppIdList:
     for j in opportunity_matrix:
@@ -94,9 +85,9 @@ for i in OppIdList:
             ProjectIDName.update({str(j['ID']):j['NAME']})
         else:
             pass    
-#print ContractIDName
-#print ProjectIDName
-#print TopRowDateList
+
+
+#----------------------
 TopRowDateList = TopRowDateList(milestone_matrix)
 
 excel_matrix = matrix_creator_3D(TopRowDateList,ContractIdList,milestone_matrix,ContractIDName,contract_matrix)

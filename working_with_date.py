@@ -74,6 +74,7 @@ def date_check(date_in,list_of_dates_dtf):
 		else:
 			print "no" 
 
+#creates a list of dates mapped from first date to latest date found in the milestones matrix due dates.
 def TopRowDateList(milestone_matrix):
 	DateList = str_to_datetime(milestone_matrix)#converts dates from str to datetime
 	final_DateList = remove_duplicates(DateList)#removes duplicates from datelist

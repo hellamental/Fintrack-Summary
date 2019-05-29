@@ -33,7 +33,7 @@ milestone_value = {
         7: "VM3 Value", #Vendor
     }
 
-    milestone_value = {
+milestone_value = {
         0: "IM1 Pct", #Invoice
         1: "IM2 Pct", #Invoice
         2: "IM3 Pct", #Invoice
@@ -44,7 +44,7 @@ milestone_value = {
         7: "VM3 Pct", #Vendor
     }
 
-milestone_recordtype = = {
+milestone_recordtype = {
         0: "0120K000000yfFUQAY", #Invoice
         1: "0120K000000yfFUQAY", #Invoice
         2: "0120K000000yfFUQAY", #Invoice
@@ -60,7 +60,7 @@ milestone_type = {
         1: "I. 1b - On Confirmed Cost",
         2: "I. 2 - Supply / Delivery of Energy Efficient Equipment to site",
         3: "I. 3 - Issue of certificate(s) of practical completion",
-        4: "I. 4a - Grid Connection"
+        4: "I. 4a - Grid Connection",
         5: "V. 1 - Goods Delivered to site",
         6: "V. 2- Practical Completion",
         7: "V. 3 - Completion of all other works",
@@ -71,7 +71,7 @@ milestone_name = {
         1: "I. 1b - On Confirmed Cost",
         2: "I. 2 - Supply / Delivery of Energy Efficient Equipment to site",
         3: "I. 3 - Issue of certificate(s) of practical completion",
-        4: "I. 4a - Grid Connection"
+        4: "I. 4a - Grid Connection",
         5: "V. 1 - Goods Delivered to site",
         6: "V. 2- Practical Completion",
         7: "V. 3 - Completion of all other works",

@@ -9,7 +9,8 @@ def remove_duplicates(duplicate):
 			final_list.append(num)
 	return final_list
 
-
+#creates a unique list based on one element of an array
+#e.g. from the milestone matrix, it creates a unique list of all the contract numbers
 def unique_list(array,position):
 	unique_list = []
 	for i in array:
@@ -21,6 +22,7 @@ def unique_list(array,position):
 	
 	return unique_list
 
+#creates a new list of all unique elements in a list and sorts them into order
 def unique_list2(array):
 	unique_list = []
 	for i in array:
