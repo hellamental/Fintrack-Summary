@@ -186,4 +186,5 @@ for i in ContractIdList:
 #print excel_matrix
 
 #closes the excel workbook
+print "Process Complete"
 workbook.close()
