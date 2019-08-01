@@ -113,6 +113,8 @@ def write_to_excel2(excel_matrix,excel_offset_col,excel_offset_row,worksheet,wor
     BlackBackWhiteText.set_font_color('white')
     BlackBackWhiteText.set_font_size(9)
     BlackBackWhiteText.set_bold()
+    pct_format = workbook.add_format({'num_format': '0.0%'})
+    pct_format.set_font_size(9)
 
 
 
@@ -132,7 +134,7 @@ def write_to_excel2(excel_matrix,excel_offset_col,excel_offset_row,worksheet,wor
         while ycount < numrows:
             x = excel_matrix[zcount][ycount][xcount]
             comment = str(excel_matrix[1][ycount][xcount])
-            payment_status = excel_matrix[1][ycount][xcount]
+            payment_status = excel_matrix[2][ycount][xcount]
             if type(x) == datetime:
                 value = 'WC ' + x.strftime("%d/%m %Y")
                 payment_status = 'BlackBackWhiteText'
@@ -168,15 +170,28 @@ def write_to_excel2(excel_matrix,excel_offset_col,excel_offset_row,worksheet,wor
     row = excel_offset_row
     #worksheet.write(row,numcols+excel_offset_col,'SUM OF MILESTONES')
     row = excel_offset_row+1
-    for i in range(0,numrows):
+    for i in range(0,numrows-1):
         row += 1 
-        formula = '=SUM('+col_reference_row2(col_ref2,row,row)+')'
+        formula = '=IF(SUM('+col_reference_row2(col_ref2,row,row)+')<>0,(SUM('+col_reference_row2(col_ref2,row,row)+')),"")'
         worksheet.write_formula(row-1,10,formula,money_format)
-        formula = '=E'+str(row)+'-K'+str(row)
+        formula = '=IFERROR(E'+str(row)+'-K'+str(row) + ',"")'
         worksheet.write_formula(row-1,11,formula,money_format)
+        formula = '=IFERROR(IF(F'+str(row)+'/E'+str(row)+'<>0,F'+str(row)+'/E'+str(row)+',""),"")'
+        worksheet.write_formula(row-1,12,formula,pct_format)
+        formula = '=IFERROR(IF(G'+str(row)+'/E'+str(row)+'<>0,G'+str(row)+'/E'+str(row)+',""),"")'
+        worksheet.write_formula(row-1,13,formula,pct_format)
+        formula = '=IFERROR(IF(H'+str(row)+'/E'+str(row)+'<>0,H'+str(row)+'/E'+str(row)+',""),"")'
+        worksheet.write_formula(row-1,14,formula,pct_format)
+        formula = '=IFERROR(IF(I'+str(row)+'/E'+str(row)+'<>0,I'+str(row)+'/E'+str(row)+',""),"")'
+        worksheet.write_formula(row-1,15,formula,pct_format)
+        formula = '=IFERROR(IF(J'+str(row)+'/E'+str(row)+'<>0,J'+str(row)+'/E'+str(row)+',""),"")'
+        worksheet.write_formula(row-1,16,formula,pct_format)
+        formula = '=IF(SUM(M'+str(row)+':Q'+str(row)+')<>0,SUM(M'+str(row)+':Q'+str(row)+'),"")'
+        worksheet.write_formula(row-1,17,formula,pct_format)
+
 
     col = excel_offset_col+1
-    for i in range(0,numcols+2):
+    for i in range(0,numcols-6):
         col_ref2 = col_reference(col,col)
         col += 1
         formula = '=SUBTOTAL(9,'+col_reference_row2(col_ref2,excel_offset_row,excel_offset_row+numrows)+')'
