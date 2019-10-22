@@ -48,7 +48,7 @@ for i in contractIdMatrix:
     ycount = 0
     xcount = 0
     zcount = 0
-    headings = ['ProjectID','Project Name','State','Pre RFQ Value','Post RFQ Value','Milestone 1','Milestone 2','Milestone 3','Milestone 4','Variation','Invoiced to Date','Left to Invoice', 'Percentage 1', 'Percentage 2', 'Percentage 3', 'Percentage 4', 'Percentage 5','Total']
+    headings = ['ProjectID','Project Name','State','Pre RFQ Value','Post RFQ Value','On Contract','On Confirmed Cost','Supply of Goods to Site','Practical Completion','Grid Connection','Retention','Invoiced to Date','Left to Invoice', 'Percentage 1', 'Percentage 2', 'Percentage 3', 'Percentage 4', 'Percentage 5','Percentage 6','Total']
 
     w, h, d = len(headings), len(project_matrix)+1, 3;
     excel_matrix = [[[0 for x in range(w)] for y in range(h)] for z in range(d)]
@@ -77,22 +77,26 @@ for i in contractIdMatrix:
                     excel_matrix[zcount][ycount][5] = float(j['MILESTONE_VALUE__C'])
                     excel_matrix[2][ycount][5] = j['STATUS__C']
                     excel_matrix[1][ycount][5] = str(j['STATUS__C']) + ' - ' + str(j['PERCENTAGE__C']) + '% - DUE DATE ' + str(j['DUE_DATE__C']) + ' - $' + str(j['MILESTONE_VALUE__C']) 
-                elif j['MILESTONE_TYPE__C'] == 'I. 2 - Supply / Delivery of Energy Efficient Equipment to site':
+                elif j['MILESTONE_TYPE__C'] == 'I. 1b - On Confirmed Cost':
                     excel_matrix[zcount][ycount][6] = float(j['MILESTONE_VALUE__C'])
                     excel_matrix[2][ycount][6] = j['STATUS__C']
                     excel_matrix[1][ycount][6] = str(j['STATUS__C']) + ' - ' + str(j['PERCENTAGE__C']) + '% - DUE DATE ' + str(j['DUE_DATE__C']) + ' - $' + str(j['MILESTONE_VALUE__C'])
-                elif j['MILESTONE_TYPE__C'] == 'I. 3 - Issue of certificate(s) of practical completion':
+                elif j['MILESTONE_TYPE__C'] == 'I. 2 - Supply / Delivery of Energy Efficient Equipment to site':
                     excel_matrix[zcount][ycount][7] = float(j['MILESTONE_VALUE__C'])
                     excel_matrix[2][ycount][7] = j['STATUS__C']
                     excel_matrix[1][ycount][7] = str(j['STATUS__C']) + ' - ' + str(j['PERCENTAGE__C']) + '% - DUE DATE ' + str(j['DUE_DATE__C']) + ' - $' + str(j['MILESTONE_VALUE__C'])
-                elif j['MILESTONE_TYPE__C'] == 'I. 4a - Grid Connection':
+                elif j['MILESTONE_TYPE__C'] == 'I. 3 - Issue of certificate(s) of practical completion':
                     excel_matrix[zcount][ycount][8] = float(j['MILESTONE_VALUE__C'])
                     excel_matrix[2][ycount][8] = j['STATUS__C']
                     excel_matrix[1][ycount][8] = str(j['STATUS__C']) + ' - ' + str(j['PERCENTAGE__C']) + '% - DUE DATE ' + str(j['DUE_DATE__C']) + ' - $' + str(j['MILESTONE_VALUE__C'])
-                elif j['MILESTONE_TYPE__C'] == 'Other' or j['MILESTONE_TYPE__C'] == 'Variance':
+                elif j['MILESTONE_TYPE__C'] == 'I. 4a - Grid Connection':
                     excel_matrix[zcount][ycount][9] = float(j['MILESTONE_VALUE__C'])
                     excel_matrix[2][ycount][9] = j['STATUS__C']
                     excel_matrix[1][ycount][9] = str(j['STATUS__C']) + ' - ' + str(j['PERCENTAGE__C']) + '% - DUE DATE ' + str(j['DUE_DATE__C']) + ' - $' + str(j['MILESTONE_VALUE__C'])
+                elif j['MILESTONE_TYPE__C'] == 'Other' or j['MILESTONE_TYPE__C'] == 'Variance':
+                    excel_matrix[zcount][ycount][10] = excel_matrix[zcount][ycount][10] + float(j['MILESTONE_VALUE__C'])
+                    excel_matrix[2][ycount][10] = j['STATUS__C']
+                    excel_matrix[1][ycount][10] = str(excel_matrix[1][ycount][10]) + ' ' + str(j['STATUS__C']) + ' - ' + str(j['PERCENTAGE__C']) + '% - DUE DATE ' + str(j['DUE_DATE__C']) + ' - $' + str(j['MILESTONE_VALUE__C'])
                 else: 
                     pass
             else:

@@ -14,7 +14,8 @@ def import_milestone2(csv_filename,contractId):
     milestone_matrix = [] #creates a new list for csv file to import milestones into.
 
     for row in csv_dictf:
-        if(row['STATUS__C']!='Forecast' and row['STATUS__C']!='Planned' and row['DUPLICATED_MILESTONE__C']=='false' and (contractId in row['CONTRACT__C'])):
+        #if(row['STATUS__C']!='Forecast' and row['STATUS__C']!='Planned' and row['DUPLICATED_MILESTONE__C']=='false' and (contractId in row['CONTRACT__C'])):
+        if(row['STATUS__C']!='Forecast' and row['DUPLICATED_MILESTONE__C']=='false' and (contractId in row['CONTRACT__C'])):   
             milestone_matrix.append(row)
         else:
             pass
@@ -165,7 +166,7 @@ def write_to_excel2(excel_matrix,excel_offset_col,excel_offset_row,worksheet,wor
         xcount += 1
 
 #this code creates summary formulas at both far right side columns and underneath all rows
-    col_ref2 = 'F:J'
+    col_ref2 = 'F:K'
     #print col_ref2
     row = excel_offset_row
     #worksheet.write(row,numcols+excel_offset_col,'SUM OF MILESTONES')
@@ -173,21 +174,23 @@ def write_to_excel2(excel_matrix,excel_offset_col,excel_offset_row,worksheet,wor
     for i in range(0,numrows-1):
         row += 1 
         formula = '=IF(SUM('+col_reference_row2(col_ref2,row,row)+')<>0,(SUM('+col_reference_row2(col_ref2,row,row)+')),"")'
-        worksheet.write_formula(row-1,10,formula,money_format)
-        formula = '=IFERROR(E'+str(row)+'-K'+str(row) + ',"")'
         worksheet.write_formula(row-1,11,formula,money_format)
+        formula = '=IFERROR(E'+str(row)+'-L'+str(row) + ',"")'
+        worksheet.write_formula(row-1,12,formula,money_format)
         formula = '=IFERROR(IF(F'+str(row)+'/E'+str(row)+'<>0,F'+str(row)+'/E'+str(row)+',""),"")'
-        worksheet.write_formula(row-1,12,formula,pct_format)
-        formula = '=IFERROR(IF(G'+str(row)+'/E'+str(row)+'<>0,G'+str(row)+'/E'+str(row)+',""),"")'
         worksheet.write_formula(row-1,13,formula,pct_format)
-        formula = '=IFERROR(IF(H'+str(row)+'/E'+str(row)+'<>0,H'+str(row)+'/E'+str(row)+',""),"")'
+        formula = '=IFERROR(IF(G'+str(row)+'/E'+str(row)+'<>0,G'+str(row)+'/E'+str(row)+',""),"")'
         worksheet.write_formula(row-1,14,formula,pct_format)
-        formula = '=IFERROR(IF(I'+str(row)+'/E'+str(row)+'<>0,I'+str(row)+'/E'+str(row)+',""),"")'
+        formula = '=IFERROR(IF(H'+str(row)+'/E'+str(row)+'<>0,H'+str(row)+'/E'+str(row)+',""),"")'
         worksheet.write_formula(row-1,15,formula,pct_format)
-        formula = '=IFERROR(IF(J'+str(row)+'/E'+str(row)+'<>0,J'+str(row)+'/E'+str(row)+',""),"")'
+        formula = '=IFERROR(IF(I'+str(row)+'/E'+str(row)+'<>0,I'+str(row)+'/E'+str(row)+',""),"")'
         worksheet.write_formula(row-1,16,formula,pct_format)
-        formula = '=IF(SUM(M'+str(row)+':Q'+str(row)+')<>0,SUM(M'+str(row)+':Q'+str(row)+'),"")'
+        formula = '=IFERROR(IF(J'+str(row)+'/E'+str(row)+'<>0,J'+str(row)+'/E'+str(row)+',""),"")'
         worksheet.write_formula(row-1,17,formula,pct_format)
+        formula = '=IFERROR(IF(K'+str(row)+'/E'+str(row)+'<>0,K'+str(row)+'/E'+str(row)+',""),"")'
+        worksheet.write_formula(row-1,18,formula,pct_format)
+        formula = '=IF(SUM(N'+str(row)+':S'+str(row)+')<>0,SUM(N'+str(row)+':S'+str(row)+'),"")'
+        worksheet.write_formula(row-1,19,formula,pct_format)
 
 
     col = excel_offset_col+1
