@@ -1,4 +1,15 @@
 import pandas as pd
+import os
+
+"""
+for filename in os.listdir(directory):
+    if filename.endswith(".xlsx")
+        print(os.path.join(directory,filename)) 
+        continue
+    else:
+        continue
+"""
+
 
 df1 = pd.read_excel (r'C:\Users\Mitchell.Dawson\Dropbox\NGER 2019\1 - Recevied Docs\10.1 Manildra flour mill\Data Request Form-NGER FY2019 - Manildra Mill rev.xlsx')
 
