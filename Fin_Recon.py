@@ -92,7 +92,7 @@ for i in contractIdMatrix:
                 elif j['MILESTONE_TYPE__C'] == 'Other' or j['MILESTONE_TYPE__C'] == 'Variance':
                     excel_matrix[zcount][ycount][9] = float(j['MILESTONE_VALUE__C'])
                     excel_matrix[2][ycount][9] = j['STATUS__C']
-                    excel_matrix[1][ycount][9] = str(j['STATUS__C']) + ' - ' + str(j['PERCENTAGE__C']) + '% - DUE DATE ' + str(j['DUE_DATE__C']) + ' - $' + str(j['MILESTONE_VALUE__C'])
+                    excel_matrix[1][ycount][9] = str(j['STATUS__C']) + ' - ' + str(j['PERCENTAGE__C']) + '% - DUE DATE ' + str(j['DUE_DATE__C']) + ' - $' + str(j['MILESTONE_VALUE__C'] + ' - ' + str(j['ID']))
                 else: 
                     pass
             else:
