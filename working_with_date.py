@@ -233,7 +233,10 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 	for i in milestone_matrix:
 		
 		if i['RECORD_TYPE_NAME__C'] == Milestone_Type:
-			due_Date = i['DUE_DATE__C']
+			if Milestone_Type == 'Vendor_Payment_Milestone':
+				due_Date = i['VENDOR_INVOICE_DATE__C']
+			else:
+				due_Date = i['DUE_DATE__C']
 			if IdName == 'ContractIdList':
 				oppID = i['CONTRACT__C']
 			elif IdName == 'OppIdList':
@@ -242,7 +245,7 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone
 				pass 	
 			
 			invoice_C = i['INVOICE__C'] #i[24]
-			due_Date = i['DUE_DATE__C'] #i[20]	
+			#due_Date = i['DUE_DATE__C'] #i[20]	
 			milestone_name = i['NAME'] #i[3]
 			percentage = i['PERCENTAGE__C'] #i[32]
 			prjct_name = i['PROJECT_NAME_CONTRACT__C'] #i[35]
