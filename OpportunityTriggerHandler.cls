@@ -128,7 +128,8 @@ public without sharing class OpportunityTriggerHandler {
 
         // Post RFQ changes for project value (invoice to client)    
         for(Opportunity oppty :newOpportunities.values()){
-            if(oldOpportunities <> NULL && oppty.Post_RFQ_Project_Value__c <> oldOpportunities.get(oppty.id).Post_RFQ_Project_Value__c){
+            if(oldOpportunities <> NULL &&
+               oppty.Post_RFQ_Project_Value__c <> oldOpportunities.get(oppty.id).Post_RFQ_Project_Value__c){
                 if(oldOpportunities.get(oppty.id).Post_RFQ_Project_Value__c == NULL){
                     projectValueDifference.put(oppty.id, oppty.Post_RFQ_Project_Value__c - oppty.VD_Project_Value__c);
                     contractIDs.add(oppty.Project_Contract__c);
