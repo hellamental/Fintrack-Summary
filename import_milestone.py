@@ -21,7 +21,7 @@ def import_milestone(csv_filename):
             pass
 
     return milestone_matrix
-
+#and row['OPPORTUNITY_STAGE__C']!='Closed Lost'#
 
 #import_milestone(csv_file)
 

@@ -85,6 +85,19 @@ def TopRowDateList(milestone_matrix):
 	TopRowDateList = date_mapping(min_date, max_date) #maps dates from min to max from earliest monday
 	return TopRowDateList
 
+#creates a list of dates mapped from first date to last date 4 weeks before current date and 8 weeks after current date.
+def TopRowDateListSelect(milestone_matrix):
+	DateList = str_to_datetime(milestone_matrix)#converts dates from str to datetime
+	final_DateList = remove_duplicates(DateList)#removes duplicates from datelist
+	
+	today = datetime.today()
+
+	min_date = today - timedelta(weeks=4) #adds 4 weeks prior to today
+	max_date = today + timedelta(weeks=8) #adds 8 weeks to today
+	
+	TopRowDateList = date_mapping(min_date, max_date) #maps dates from min to max from earliest monday
+	print TopRowDateList
+	return TopRowDateList
 
 def remove_duplicates(duplicate):
 	final_list = []
@@ -111,12 +124,12 @@ def unique_list2(array):
 	return unique_list	
 
 def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName,contract_matrix): #creates matrix with width = toprowdatelist, length = uniqueID list, 
-	w, h, d = len(TopRowList)+7, len(UniqueIdList)+1, len(Matrix[0]);
+	w, h, d = len(TopRowList)+8, len(UniqueIdList)*2+1, len(Matrix[0]);
 	excel_matrix = [[[0 for x in range(w)] for y in range(h)] for z in range(d)]
 	
 	#adds weekstart dates to each element in first row of matrix.
 	ycount = 0
-	xcount = 3
+	xcount = 5
 	zcount = 0
 	for i in TopRowList:    
 		x = i#.strftime("%d-%m-%Y")
@@ -126,31 +139,56 @@ def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName,contract_mat
 	ycount = 0
 	zcount = 0
 	xcount = len(excel_matrix[0][0])-3
+	excel_matrix[zcount][ycount][0]='Contract ID'
+	excel_matrix[zcount][ycount][1]='Contract Name'
+	excel_matrix[zcount][ycount][2]='SF Link'
+	excel_matrix[zcount][ycount][3]='Status'
+	excel_matrix[zcount][ycount][4]='Milestone Type'
 	excel_matrix[zcount][ycount][xcount]='PRE RFQ CONTRACT VALUE'	
 	xcount = len(excel_matrix[0][0])-2
 	excel_matrix[zcount][ycount][xcount]='POST RFQ CONTRACT VALUE'
 	xcount = len(excel_matrix[0][0])-1
 	excel_matrix[zcount][ycount][xcount]='POST RFQ VENDOR COST'
 
-
+	ycount = 1
+	xcount = 0
+	zcount = 0 
+	for i in UniqueIdList:
+		excel_matrix[zcount][ycount][xcount]=i 
+		ycount += 1
+		excel_matrix[zcount][ycount][xcount]=i 
+		ycount += 1
 
 	#adds Opportunity ID list to each element in first col of matrix.
 	ycount = 1
-	xcount = 1
+	xcount = 2
 	zcount = 0 
 	for i in UniqueIdList:
 		excel_matrix[zcount][ycount][xcount]=str('https://verdia.my.salesforce.com/') + str(i) 
 		ycount += 1
+		excel_matrix[zcount][ycount][xcount]=str('https://verdia.my.salesforce.com/') + str(i) 
+		ycount += 1
 
 	ycount = 1
-	xcount = 0
+	xcount = 1
 	zcount = 0
 	for i in UniqueIdList:
 		excel_matrix[zcount][ycount][xcount] = ContractIDName[i]
 		ycount += 1
+		excel_matrix[zcount][ycount][xcount] = ContractIDName[i]
+		ycount += 1
 
 	ycount = 1
-	x1count = 2
+	xcount = 4
+	zcount = 0
+	for i in UniqueIdList:
+		excel_matrix[zcount][ycount][xcount] = 'Invoice Milestone'
+		ycount += 1
+		excel_matrix[zcount][ycount][xcount] = 'Vendor Payment Milestone'
+		ycount += 1
+
+	ycount = 1
+	x1count = 3
 	x2count = len(excel_matrix[0][0])-2
 	x3count = len(excel_matrix[0][0])-3
 	x4count = len(excel_matrix[0][0])-1
@@ -163,13 +201,33 @@ def matrix_creator_3D(TopRowList,UniqueIdList,Matrix,ContractIDName,contract_mat
 				excel_matrix[zcount][ycount][x3count] = '='+ str(j['TOTAL_PROJECT_VALUE__C'])
 				excel_matrix[zcount][ycount][x4count] = '='+ str(j['POST_RFQ_VENDOR_COST__C'])
 				ycount += 1
+				excel_matrix[zcount][ycount][x1count] = j['STATUS']
+				excel_matrix[zcount][ycount][x2count] = '='+ str(j['POST_RFQ_CONTRACT_VALUE__C'])
+				excel_matrix[zcount][ycount][x3count] = '='+ str(j['TOTAL_PROJECT_VALUE__C'])
+				excel_matrix[zcount][ycount][x4count] = '='+ str(j['POST_RFQ_VENDOR_COST__C'])
+				ycount += 1
+
+
 			else:
 				pass
+	print 'debug'
+	#print excel_matrix[0]
 
 	return excel_matrix
 
+
+def IDDuplicatorList(UniqueIdList):
+	UniqueIDListTemp = []
+	for i in UniqueIdList:
+		UniqueIDListTemp.append(i)
+		UniqueIDListTemp.append(i)
+	print UniqueIDListTemp
+	return UniqueIDListTemp
+
+
+
 def matrix_creator_3D2(TopRowList,UniqueIdList,Matrix,ContractIDName,opportunity_matrix): #creates matrix with width = toprowdatelist, length = uniqueID list, 
-	w, h, d = len(TopRowList)+7, len(UniqueIdList)+1, len(Matrix[0]);
+	w, h, d = len(TopRowList)+8, len(UniqueIdList)+1, len(Matrix[0]);
 	excel_matrix = [[[0 for x in range(w)] for y in range(h)] for z in range(d)]
 	
 	#adds weekstart dates to each element in first row of matrix.
@@ -227,63 +285,65 @@ def matrix_creator_3D2(TopRowList,UniqueIdList,Matrix,ContractIDName,opportunity
 
 	return excel_matrix
 
-def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist,Milestone_Type):
+def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist):
 	
 	#print IdName
 	for i in milestone_matrix:
 		
-		if i['RECORD_TYPE_NAME__C'] == Milestone_Type:
-			if Milestone_Type == 'Vendor_Payment_Milestone':
-				due_Date = i['VENDOR_INVOICE_DATE__C']
-			else:
-				due_Date = i['DUE_DATE__C']
-			if IdName == 'ContractIdList':
-				oppID = i['CONTRACT__C']
-			elif IdName == 'OppIdList':
-				oppID = i['OPPORTUNITY__C']
-			else: #oppIdList
-				pass 	
-			
-			invoice_C = i['INVOICE__C'] #i[24]
-			#due_Date = i['DUE_DATE__C'] #i[20]	
-			milestone_name = i['NAME'] #i[3]
-			percentage = i['PERCENTAGE__C'] #i[32]
-			prjct_name = i['PROJECT_NAME_CONTRACT__C'] #i[35]
-			status = i['STATUS__C'] #i[44]
-			project_ID = i['OPPORTUNITY__C']
-			comment = i['COMMENT__C']
-			
-			if due_Date == '':
-				pass
-			else:
-				k = parse(due_Date)
-				#print type(k), "TYPE K"
-				for j in excel_matrix[0][0]: #for j in line 1 of excel matrix 
-					#print type(j), j, 'J'
-					#print type(k), k, 'K'
-					col = excel_matrix[0][0].index(j)
-					row = Idlist.index(oppID)+1
-					dep = 0
-					if type(j)==type(k) and k >= j and k < j + timedelta(days=7):
-					#print excel_matrix.index(j)
-						#print type(oppID)
-						#print j
-  						#this line is causing an error for Opp IDs
-						#print row
-						dep = 0
-						dollar_val = float(i['MILESTONE_VALUE__C'])
-						if excel_matrix[dep][row][col] == 0:
-							excel_matrix[dep][row][col] = '='+str(dollar_val)
-							excel_matrix[2][row][col] = status
-							excel_matrix[1][row][col] = str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)+' - '+str(comment)#add due date
-						else:
-							excel_matrix[dep][row][col] = excel_matrix[dep][row][col]+'+'+str(dollar_val)
-							excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)+' - '+str(comment)#add due date
-							excel_matrix[2][row][col] = status
-	
-					else:
-						pass
+		if i['RECORD_TYPE_NAME__C'] == 'Vendor_Payment_Milestone':
+			due_Date = i['VENDOR_INVOICE_DATE__C']
+		else:
+			due_Date = i['DUE_DATE__C']
+		if IdName == 'ContractIdList':
+			oppID = i['CONTRACT__C']
+		elif IdName == 'OppIdList':
+			oppID = i['OPPORTUNITY__C']
+		else: #oppIdList
+			pass 	
+		
+		invoice_C = i['INVOICE__C'] #i[24]
+		#due_Date = i['DUE_DATE__C'] #i[20]	
+		milestone_name = i['NAME'] #i[3]
+		percentage = i['PERCENTAGE__C'] #i[32]
+		prjct_name = i['PROJECT_NAME_CONTRACT__C'] #i[35]
+		status = i['STATUS__C'] #i[44]
+		project_ID = i['OPPORTUNITY__C']
+		comment = i['COMMENT__C']
+		
+		if due_Date == '':
 			pass
+		else:
+			k = parse(due_Date)
+			#print type(k), "TYPE K"
+			for j in excel_matrix[0][0]: #for j in line 1 of excel matrix 
+				#print type(j), j, 'J'
+				#print type(k), k, 'K'
+				col = excel_matrix[0][0].index(j)
+				if i['RECORD_TYPE_NAME__C'] == 'Invoice_Milestone':
+					row = Idlist.index(oppID)+1
+				else:
+					row = Idlist.index(oppID)+2	
+				dep = 0
+				if type(j)==type(k) and k >= j and k < j + timedelta(days=7):
+				#print excel_matrix.index(j)
+					#print type(oppID)
+					#print j
+					#this line is causing an error for Opp IDs
+					#print row
+					dep = 0
+					dollar_val = float(i['MILESTONE_VALUE__C'])
+					if excel_matrix[dep][row][col] == 0:
+						excel_matrix[dep][row][col] = '='+str(dollar_val)
+						excel_matrix[2][row][col] = status
+						excel_matrix[1][row][col] = str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)+' - '+str(comment)#add due date
+					else:
+						excel_matrix[dep][row][col] = excel_matrix[dep][row][col]+'+'+str(dollar_val)
+						excel_matrix[1][row][col] = excel_matrix[1][row][col]+'\n\n'+str(milestone_name)+' - '+str(prjct_name)+' - '+str(status)+' - $'+str(dollar_val)+' - '+str(percentage)+'% - '+due_Date +' - '+str(project_ID)+' - '+str(comment)#add due date
+						excel_matrix[2][row][col] = status
+
+				else:
+					pass
+
 
 def excel_matrix_populator_site(milestone_matrix,excel_matrix,Id,Idlist,Milestone_Type):
 	

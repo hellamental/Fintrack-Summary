@@ -40,6 +40,7 @@ worksheet.write('B3', "Cashflow Summary")
 
 #1. imports milestones from csv file and loads values into 2x dimensional matrix - in string format. 
 milestone_matrix = import_milestone(milestone_csv)
+#print milestone_matrix
 opportunity_matrix = import_opportunities(opportunity_csv)
 account_matrix = import_accounts(account_csv)
 contract_matrix = import_contract(contract_csv)
@@ -88,7 +89,7 @@ for i in OppIdList:
 
 
 #----------------------
-TopRowDateList = TopRowDateList(milestone_matrix)
+TopRowDateList = TopRowDateListSelect(milestone_matrix)
 
 excel_matrix = matrix_creator_3D(TopRowDateList,ContractIdList,milestone_matrix,ContractIDName,contract_matrix)
 
@@ -119,7 +120,8 @@ numrows2 = len(OppIdList)
 #print excel_matrix[10][0][0] # depth 10
 
 #print ContractIdList
-excel_matrix_populator(milestone_matrix,excel_matrix,'ContractIdList',ContractIdList,"Invoice_Milestone")
+newlist = IDDuplicatorList(ContractIdList )
+excel_matrix_populator(milestone_matrix,excel_matrix,'ContractIdList',newlist)
 
 
 excel_offset_col = 1
@@ -127,13 +129,20 @@ excel_offset_row = 8
 write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,workbook)
 
 
+#need to generate a new list of projects IDs to show all projects in view similar to summary view. 
+
+
+#BREAKKKKKK
+"""
 excel_offset_row = numrows + excel_offset_row + 10
 
 excel_matrix = []
-excel_matrix = matrix_creator_3D(TopRowDateList,ContractIdList,milestone_matrix,ContractIDName,contract_matrix)
-excel_matrix_populator(milestone_matrix,excel_matrix,'ContractIdList',ContractIdList,"Vendor_Payment_Milestone")
+excel_matrix = matrix_creator_3D(TopRowDateList,ContractIdList,milestone_matrix,ContractIDName,opportunity_matrix)
+excel_matrix_populator(milestone_matrix,excel_matrix,'ContractIdList',newlist2)
 
 write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,workbook)
+"""
+
 
 excel_offset_row = 8
 
@@ -153,25 +162,27 @@ for i in ContractIdList:
                 RelOppIdList.append(j['ID'])    
             else:
                 pass
-        RelOppIdList = unique_list2(RelOppIdList)
-        #print i, '//contract ID'
-        #print RelOppIdList, '//OppIDList'
-        #print len(RelOppIdList)
+        
+RelOppIdList = unique_list2(RelOppIdList)
+newlist2 = IDDuplicatorList(RelOppIdList)
+print newlist2
+#print RelOppIdList, '//OppIDList'
+#print len(RelOppIdList)
 
-        excel_offset_col = 1
-        excel_offset_row = 8
+excel_offset_col = 1
+excel_offset_row = 8
 
-        milestone_types = ["Invoice_Milestone","Vendor_Payment_Milestone"]
-        for milestone_type in milestone_types:  
-                
-            excel_matrix = []
-            excel_matrix = matrix_creator_3D2(TopRowDateList,RelOppIdList,milestone_matrix,ProjectIDName,opportunity_matrix)
-            
-            excel_matrix_populator_site2(milestone_matrix,excel_matrix,'OppIdList',RelOppIdList,milestone_type,i) # this is where the issue occurs on the second contract ID
-            write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet_name,workbook)    
+milestone_types = ["Invoice_Milestone","Vendor_Payment_Milestone"]
+for milestone_type in milestone_types:  
+        
+    excel_matrix = []
+    excel_matrix = matrix_creator_3D2(TopRowDateList,RelOppIdList,milestone_matrix,ProjectIDName,opportunity_matrix)
+    
+    excel_matrix_populator_site2(milestone_matrix,excel_matrix,'OppIdList',RelOppIdList,milestone_type,i) # this is where the issue occurs on the second contract ID
+    write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet_name,workbook)    
 
-            numrows = len(excel_matrix[0])
-            excel_offset_row = numrows + excel_offset_row + 10
+    numrows = len(excel_matrix[0])
+    excel_offset_row = numrows + excel_offset_row + 10
 
 
 #insPymtLeged(workbook,worksheet,today_col)
