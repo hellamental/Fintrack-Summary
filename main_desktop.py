@@ -120,6 +120,7 @@ numrows2 = len(OppIdList)
 #print excel_matrix[10][0][0] # depth 10
 
 #print ContractIdList
+
 newlist = IDDuplicatorList(ContractIdList )
 excel_matrix_populator(milestone_matrix,excel_matrix,'ContractIdList',newlist)
 
@@ -147,16 +148,12 @@ write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet,workbook
 excel_offset_row = 8
 
 
-
+RelOppIdList = ['']
 for i in ContractIdList:
     if i == '':
         pass
     else:
-        name = ContractIDName[i]
-        name2 = name[0:30]               
-        worksheet_name = workbook.add_worksheet(name2)
-    
-        RelOppIdList = ['']
+
         for j in opportunity_matrix:   
             if j['PROJECT_CONTRACT__C'] == i: #if contract id of milestone matches the current contract id in the array, proceed to add opp id to list.
                 RelOppIdList.append(j['ID'])    
@@ -165,13 +162,31 @@ for i in ContractIdList:
         
 RelOppIdList = unique_list2(RelOppIdList)
 newlist2 = IDDuplicatorList(RelOppIdList)
-print newlist2
-#print RelOppIdList, '//OppIDList'
-#print len(RelOppIdList)
+#print newlist2
+
+name = 'Project Summary View'
+name2 = name[0:30]               
+worksheet_name = workbook.add_worksheet(name2)     
+
+excel_matrix = matrix_creator_3D2(TopRowDateList,RelOppIdList,milestone_matrix,ProjectIDName,opportunity_matrix)
+excel_matrix_populator(milestone_matrix,excel_matrix,'OppIdList',newlist2)
 
 excel_offset_col = 1
 excel_offset_row = 8
 
+write_to_excel(excel_matrix,excel_offset_col,excel_offset_row,worksheet_name,workbook)
+
+
+#print RelOppIdList, '//OppIDList'
+#print len(RelOppIdList)
+#------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+"""
 milestone_types = ["Invoice_Milestone","Vendor_Payment_Milestone"]
 for milestone_type in milestone_types:  
         
@@ -183,7 +198,7 @@ for milestone_type in milestone_types:
 
     numrows = len(excel_matrix[0])
     excel_offset_row = numrows + excel_offset_row + 10
-
+"""
 
 #insPymtLeged(workbook,worksheet,today_col)
 #    col = excel_matrix[0].index(i)
