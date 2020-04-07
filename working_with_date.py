@@ -362,7 +362,12 @@ def excel_matrix_populator(milestone_matrix,excel_matrix,IdName,Idlist):
 					#this line is causing an error for Opp IDs
 					#print row
 					dep = 0
-					dollar_val = float(i['MILESTONE_VALUE__C'])
+					if(i['RECORD_TYPE_NAME__C']=='Vendor_Payment_Milestone'):
+						dollar_val = -float(i['MILESTONE_VALUE__C'])
+					else:
+						dollar_val = float(i['MILESTONE_VALUE__C'])
+					
+					
 					if excel_matrix[dep][row][col] == 0:
 						excel_matrix[dep][row][col] = '='+str(dollar_val)
 						excel_matrix[2][row][col] = status

@@ -16,6 +16,10 @@ def import_milestone(csv_filename):
             if(row['CONTRACT__C']=='' and row['OPPORTUNITY__C']==''):
                 pass
             else:
+                #if(row['RECORD_TYPE_NAME__C']=='Vendor_Payment_Milestone'):
+                #    row['MILESTONE_VALUE__C']= -1*row['MILESTONE_VALUE__C']
+                #    milestone_matrix.append(row)
+                #else:
                 milestone_matrix.append(row)
         else:
             pass
