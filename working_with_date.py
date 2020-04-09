@@ -92,9 +92,11 @@ def TopRowDateListSelect(milestone_matrix):
 	
 	today = datetime.today()
 
-	min_date = today - timedelta(weeks=4) #adds 4 weeks prior to today
-	max_date = today + timedelta(weeks=8) #adds 8 weeks to today
-	
+	#min_date = today - timedelta(weeks=8) #adds 4 weeks prior to today
+	#max_date = today + timedelta(weeks=8) #adds 8 weeks to today
+	min_date = datetime(2018,1,1)
+	max_date = datetime(2020,12,31)
+
 	TopRowDateList = date_mapping(min_date, max_date) #maps dates from min to max from earliest monday
 	print TopRowDateList
 	return TopRowDateList
